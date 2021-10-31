@@ -1,69 +1,136 @@
-<!DOCTYPE html>
+{{-- <!DOCTYPE html>
 <html>
+
 <head>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- Page title -->
-    <title>HOMER | WebApp admin theme</title>
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <!--<link rel="shortcut icon" type="image/ico" href="favicon.ico" />-->
-    <!-- Vendor styles -->
-    <link rel="stylesheet" href="{{ asset('css/app.css')}}" />
-    <link rel="stylesheet" href="{{ asset('homer/vendor/fontawesome/css/font-awesome.css')}}" />
-    <link rel="stylesheet" href="{{ asset('homer/vendor/metisMenu/dist/metisMenu.css')}}" />
-    <link rel="stylesheet" href="{{ asset('homer/vendor/animate.css/animate.css')}}" />
-    <link rel="stylesheet" href="{{ asset('homer/vendor/bootstrap/dist/css/bootstrap.css')}}" />
-    <!-- App styles -->
-    <link rel="stylesheet" href="{{ asset('homer/fonts/pe-icon-7-stroke/css/pe-icon-7-stroke.css')}}" />
-    <link rel="stylesheet" href="{{ asset('homer/fonts/pe-icon-7-stroke/css/helper.css')}}" />
-    <link rel="stylesheet" href="{{ asset('homer/styles/style.css')}}" />
+
+    <title>Parqueo| Login</title>
+
+    <link href="{{ asset('Inspinia/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('Inspinia/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
+
+    <link href="{{ asset('Inspinia/css/animate.css') }}" rel="stylesheet">
+    <link href="{{ asset('Inspinia/css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
 </head>
-<body class="blank">
-    <div class="login-container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="text-center m-b-md">
-                    <h3>Login Ladrilleria</h3>
-                </div>
-                <div class="hpanel">
-                    <div class="panel-body">
-                        <form action="#" id="loginForm">
-                            <div class="form-group">
-                                <label class="control-label" for="username">Username</label>
-                                <input type="text" placeholder="example@gmail.com" title="Please enter you username"
-                                    required="" value="" name="username" id="username" class="form-control">
-                                <span class="help-block small">Tu usuario para web app</span>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label" for="password">Password</label>
-                                <input type="password" title="Please enter your password" placeholder="******"
-                                    required="" value="" name="password" id="password" class="form-control">
-                                <span class="help-block small">Tu contraseña</span>
-                            </div>
-                            <button class="btn btn-danger btn-block">Login</button>
-                            {{-- <a class="btn btn-default btn-block" href="#">Register</a> --}}
-                        </form>
+
+<body class="gray-bg">
+
+    <div class="middle-box text-center loginscreen animated fadeInDown">
+        <div class="card">
+            <div class="card-header" style="height:60px;background-color:#f35731;">
+                <span class="h4 text-uppercase" style="color:white;">Ladrilleria</span>
+            </div>
+            <div class="card-body">
+
+                <p class="h5 text-uppercase">Iniciar Session</p>
+                <form action="{{ route('login') }}" method="post">
+                    @csrf
+                    <div class="form-group text-left">
+                        <label class="" for=" username">Correo:</label>
+                        <input type="text" placeholder="example@gmail.com" value="{{ old('email') }}" name="email"
+                            id="email" class="form-control @error('email') is-invalid @enderror">
+                        @error('email')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                     </div>
-                </div>
+                    <div class="form-group text-left">
+                        <label class="" for=" password">Contraseña:</label>
+                        <input type="password" placeholder="******************" required="" value="" name="password"
+                            id="password" class="form-control @error('password') is-invalid @enderror">
+                        @error('password')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <button class="btn btn-danger btn-block" style="background-color:#f35731; border-block-color: #f35731">Login</button>
+                </form>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <strong>System Ladrilleria</strong> -  WEB APP <br /> 2021 Copyright Company Name
-            </div>
+
         </div>
     </div>
-    <!-- Vendor scripts -->
-    <script src="{{asset('homer/vendor/jquery/dist/jquery.min.js')}}"></script>
-    <script src="{{asset('homer/vendor/jquery-ui/jquery-ui.min.js')}}"></script>
-    <script src="{{asset('homer/vendor/slimScroll/jquery.slimscroll.min.js')}}"></script>
-    <script src="{{asset('homer/vendor/bootstrap/dist/js/bootstrap.min.js')}}"></script>
-    <script src="{{asset('homer/vendor/metisMenu/dist/metisMenu.min.js')}}"></script>
-    <script src="{{asset('homer/vendor/iCheck/icheck.min.js')}}"></script>
-    <script src="{{asset('homer/vendor/sparkline/index.js')}}"></script>
-    <!-- App scripts -->
-    <script src="{{asset('homer/scripts/homer.js')}}"></script>
+
+    <script src="{{ asset('Inspinia/js/jquery-3.1.1.min.js') }}"></script>
+    <script src="{{ asset('Inspinia/js/popper.min.js') }}"></script>
+    <script src="{{ asset('Inspinia/js/bootstrap.js') }}"></script>
+
 </body>
+
+</html> --}}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Animated Login Form</title>
+    <link rel="stylesheet" type="text/css" href="{{ asset('LoginPlantilla/css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/a81368914c.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+
+<body>
+    <img class="wave" src="{{ asset('LoginPlantilla/img/wave.png') }}" />
+    <div class="container">
+        <div class="img"></div>
+        <div class="login-content">
+            <form action="{{ route('login') }}" method="post">
+                @csrf
+                <img src="{{ asset('LoginPlantilla/img/avatar.svg') }}" />
+                <br>
+
+                <div style="float: left;">
+                    <label for="">USUARIO</label>
+                </div>
+                <br>
+                <div class="input-div one">
+                    <div class="i">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="div">
+                        <input type="text" value="{{ old('email') }}" name="email" id="email" class="input">
+                    </div>
+                </div>
+                @error('email')
+                <div style="text-align: left">
+                    <span style="color:rgb(206, 49, 49)">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                </div>
+                @enderror
+
+
+                <br>
+                <div style="float: left;">
+                    <label for="">Password</label>
+                </div>
+                <br>
+                <div class="input-div pass">
+                    <div class="i">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="div">
+                        <h5>Password</h5>
+                        <input type="password" class="input" name="password" id="password" />
+                    </div>
+                </div>
+                @error('password')
+                <div style="text-align: left">
+                    <span style="color:rgb(206, 49, 49)">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                </div>
+                @enderror
+                <input type="submit" class="btn" value="Login" />
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript" src="{{ asset('LoginPlantilla/js/main.js') }}"></script>
+</body>
+
 </html>
