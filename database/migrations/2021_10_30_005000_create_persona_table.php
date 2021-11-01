@@ -20,7 +20,7 @@ class CreatePersonaTable extends Migration
             $table->string('telefono')->nullable();
             $table->date('fecha_nacimiento')->nullable();
             $table->enum('genero',['M','F']);
-            $table->enum('estadoCivil',['Casado','Viudo','Soltero']);
+            $table->enum('estado_civil',['Casado','Viudo','Soltero']);
             $table->enum('estado',['ACTIVO','ANULADO'])->default('ACTIVO');
             $table->timestamps();
         });

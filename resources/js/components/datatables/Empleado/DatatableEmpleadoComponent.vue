@@ -120,9 +120,10 @@ export default {
                         data: null,
                         className: "text-center",
                         render: function (data) {
+                            console.log(data)
                             return (
                                 "<div class='btn-group' style='text-transform:capitalize;'><button data-toggle='dropdown' class='btn btn-danger  btn-sm  dropdown-toggle'><i class='fa fa-bars'></i></button><ul class='dropdown-menu'>" +
-                                "<li><a class='dropdown-item btn-edit' href='#' title='Modificar' ><b><i class='fa fa-edit'></i>Editar</a></b></li>" +
+                                "<li><a class='dropdown-item btn-edit' href='"+route('empleado.edit',data.id)+"' title='Modificar' ><b><i class='fa fa-edit'></i>Editar</a></b></li>" +
                                 "<li><a class='dropdown-item btn-delete'  title='Eliminar'><b><i class='fa fa-trash'></i> Eliminar</a></b></li>" +
                                 "</ul></div>"
                             );

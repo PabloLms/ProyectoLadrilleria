@@ -13,6 +13,8 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Yajra\DataTables\Facades\DataTables;
 
 class EmpleadoController extends Controller
@@ -41,6 +43,39 @@ class EmpleadoController extends Controller
     }
     public function store(Request $request)
     {
+        Log::info($request);
+        $data = $request->all();
+
+        $rules = [
+            'telefono' =>[ 'required','numeric'],
+            'direccion' => 'required',
+            'fecha_nacimiento' => 'required',
+            'genero' =>'required',
+            'edad' => ['required','numeric'],
+            'estado_civil' => 'required',
+            'email' => ['required','email:rfc,dns',Rule::unique('users','email')->where(function ($query) {
+            })],
+            'password' => ['required','same:confirm_password'],
+            'confirm_password' => 'required',
+        ];
+        $message = [
+            'telefono.required' => 'El Campo telefono es Obligatorio',
+            'telefono.numeric' => 'El Campo telefono debe ser numerico',
+            'direccion.required' => 'El Campo direccion es Obligatorio',
+            'fecha_nacimiento.required' => 'El Campo Fecha es Obligatorio',
+            'estado_civil.required' => 'El Campo estado Civil es Obligatorio',
+            'email.required' => 'El Campo email es Obligatorio',
+            'email.unique' => 'El Campo email ya esta registrado',
+            'email.email' => 'formato no valido',
+            'genero.required' =>'El Campo genero es Obligatorio',
+            'password.required' => 'El Campo password es Obligatorio',
+            'password.same' => 'No coinciden los campos de contraseña',
+            'confirm_password.required' => 'El Campo password es Obligatorio',
+
+
+        ];
+
+        Validator::make($data, $rules, $message)->validate();
         try {
             DB::commit();
             $persona = new Persona();
@@ -49,7 +84,7 @@ class EmpleadoController extends Controller
             $persona->telefono = $request->telefono;
             $persona->fecha_nacimiento = $request->fecha_nacimiento;
             $persona->genero = $request->genero;
-            $persona->estadoCivil = $request->estado_civil;
+            $persona->estado_civil = $request->estado_civil;
             $persona->save();
             if ($request->tipo_documento == "DNI") {
                 $persona_dni = new PersonaDni();
@@ -78,13 +113,13 @@ class EmpleadoController extends Controller
                 $file = $request->file('logo');
                 $name = $file->getClientOriginalName();
                 $empleado->nombre_imagen = $name;
-                $empleado->url_imagen = $request->file('logo')->store('public/empleados/');
+                $empleado->url_imagen = $request->file('logo')->store('public/empleados');
             }
             $empleado->save();
             DB::commit();
         } catch (Exception $e) {
-            Log::info($e->getMessage());
             DB::rollback();
+            Log::info($e->getMessage());
         }
         return redirect()->route('empleado.index');
     }

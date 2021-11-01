@@ -15,7 +15,7 @@ class Persona extends Model
         'telefono',
         'fecha_nacimiento',
         'genero',
-        'estado_civil',
+        'estadoCivil',
         'estado'
     ];
     public $timestamps = true;
