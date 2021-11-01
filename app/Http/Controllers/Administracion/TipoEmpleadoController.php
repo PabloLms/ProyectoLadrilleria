@@ -3,7 +3,12 @@
 namespace App\Http\Controllers\Administracion;
 
 use App\Http\Controllers\Controller;
+use App\Models\Administracion\TipoEmpleado;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Yajra\DataTables\Facades\DataTables;
 
 class TipoEmpleadoController extends Controller
 {
@@ -11,24 +16,52 @@ class TipoEmpleadoController extends Controller
     {
         return view('administracion.tipoempleado.index');
     }
+    public function getList()
+    {
+        return DataTables::of(TipoEmpleado::where('estado','ACTIVO')->get())->toJson();
+    }
     public function store(Request $request)
     {
         try {
-            $fa=new fre();
-
-
+            DB::beginTransaction();
+            TipoEmpleado::create($request->all());
+            DB::commit();
             return array("success"=>true,"mensaje"=>"Registro con Exito");
         }
         catch(Exception $e) {
-            return array("success"=>false,"mensaje"=>"Registro con Exito");
+            Log::info($e->getMessage());
+            DB::rollBack();
+            return array("success"=>false,"mensaje"=>$e->getMessage());
         }
 
     }
-    public function update(Request $request){
-
+    public function update(Request $request,$id){
+        try {
+            DB::beginTransaction();
+            TipoEmpleado::findOrFail($id)->update(
+                $request->all()
+            );
+            DB::commit();
+            return array("success"=>true,"mensaje"=>"Actualizado con Exito");
+        }
+        catch(Exception $e) {
+            DB::rollBack();
+            return array("success"=>false,"mensaje"=>$e->getMessage());
+        }
     }
-    public function destroy(){
-
+    public function destroy($id){
+        try {
+            DB::beginTransaction();
+            TipoEmpleado::findOrFail($id)->update([
+                "estado"=>"ANULADO"
+            ]);
+            DB::commit();
+            return array("success"=>true,"mensaje"=>"Eliminado con Exito");
+        }
+        catch(Exception $e) {
+            DB::rollBack();
+            return array("success"=>false,"mensaje"=>$e->getMessage());
+        }
     }
 
 }

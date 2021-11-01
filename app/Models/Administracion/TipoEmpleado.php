@@ -11,7 +11,8 @@ class TipoEmpleado extends Model
     protected $table="tipo_empleado";
     protected $fillable=[
         'tipo',
-        'descripcion'
+        'descripcion',
+        'estado'
     ];
     public $timestamps = true;
     public function empleados(){

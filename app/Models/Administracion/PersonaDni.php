@@ -20,4 +20,7 @@ class PersonaDni extends Model
     {
         return $this->belongsTo(Persona::class,"persona_id");
     }
+    public function nombres_apellidos(){
+        return $this->nombres." ".$this->apellidos;
+    }
 }

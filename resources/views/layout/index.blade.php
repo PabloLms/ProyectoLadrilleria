@@ -10,16 +10,21 @@
     @yield('css-vue')
     <link href="{{ asset('Inspinia/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('Inspinia/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
+    <link href="{{ asset('Inspinia/css/plugins/sweetalert/sweetalert.css') }}" rel="stylesheet">
+    @yield('css-midle')
     <link href="{{ asset('Inspinia/css/animate.css') }}" rel="stylesheet">
     <link href="{{ asset('Inspinia/css/style.css') }}" rel="stylesheet">
     <!-- Toastr style -->
     <link href="{{ asset('Inspinia/css/plugins/toastr/toastr.min.css') }}" rel="stylesheet">
     <!-- Styles -->
     @yield('css-custom')
+    <style>
+    </style>
 
 </head>
 
 @routes
+
 <body style="color:rgb(37, 36, 64);">
     @auth
         <div id="">
@@ -45,7 +50,7 @@
                         </li>
                         <li>
                             <a href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                                document.getElementById('logout-form').submit();">
+                                                                        document.getElementById('logout-form').submit();">
                                 <i class="fa fa-sign-out"></i>
                                 Cerrar
                                 Sesión</a>
@@ -69,15 +74,16 @@
     @endauth
     @yield('script-vue')
     <script src="{{ asset('Inspinia/js/jquery-3.1.1.min.js') }}"></script>
+    <script src="{{ asset('Inspinia/js/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
     <script src="{{ asset('Inspinia/js/popper.min.js') }}"></script>
     <script src="{{ asset('Inspinia/js/bootstrap.js') }}"></script>
     <script src="{{ asset('Inspinia/js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
     <script src="{{ asset('Inspinia/js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
     <script src="{{ asset('Inspinia/js/inspinia.js') }}"></script>
     <script src="{{ asset('Inspinia/js/plugins/pace/pace.min.js') }}"></script>
-    <script src="{{ asset('Inspinia/js/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
     <script src="{{ asset('Inspinia/js/plugins/toastr/toastr.min.js') }}"></script>
     <script src="{{ asset('Inspinia/js/scripts.js') }}"></script>
+    <script src="{{ asset('Inspinia/js/plugins/sweetalert/sweetalert.min.js') }}"></script>
     @yield('script-custom')
 </body>
 

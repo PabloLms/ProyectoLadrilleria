@@ -4,11 +4,12 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 import Vue from "vue";
+
 require("./bootstrap");
 
 window.Vue = require("vue").default;
-const $ = require("jquery");
-window.$ = $;
+// const $ = require("jquery");
+// window.$ = $;
 
 /**
  * The following block of code may be used to automatically register your
@@ -30,12 +31,26 @@ Vue.component(
     require("./components/administracion/tipoEmpleado/TipoEmpleadoIndexComponent.vue")
         .default
 );
-
+Vue.component(
+    "empleadoindex-component",
+    require("./components/administracion/Empleado/EmpleadoIndexComponent.vue")
+        .default
+);
+Vue.component(
+    "empleadocreate-component",
+    require("./components/administracion/Empleado/EmpleadoCreateComponent.vue")
+        .default
+);
 //Datatable
 
 Vue.component(
     "datatabletipoempleado-component",
     require("./components/datatables/tipoEmpleado/DatatableTipoEmpleadoComponent.vue")
+        .default
+);
+Vue.component(
+    "datatableempleado-component",
+    require("./components/datatables/Empleado/DatatableEmpleadoComponent.vue")
         .default
 );
 /**

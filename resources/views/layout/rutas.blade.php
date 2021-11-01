@@ -20,16 +20,18 @@
         </div>
     </li>
     <li class="@yield('map-active')">
-        <a href="#"><i class="fa fa-globe"></i> <span
-                class="nav-label" >Dashboard</a>
+        <a href="#"><i class="fa fa-globe"></i> <span class="nav-label">Dashboard</a>
     </li>
-        <li class="@yield('administracion-active')">
-            <a href="#"><i class="fa fa-list" ></i> <span
-                    class="nav-label" >Administracion</span><span
-                    class="fa arrow"></span></a>
-            <ul class="nav nav-second-level collapse">
-                    <li class="@yield('tipoempleado-active')"><a href="{{route('tipoempleado.index')}}"><i
-                                class="fa fa-building" aria-hidden="true"></i>Tipos de Empleados</a></li>
-            </ul>
-        </li>
+    <li class="@yield('administracion-active')">
+        <a href="#"><i class="fa fa-list"></i> <span class="nav-label">Administracion</span><span
+                class="fa arrow"></span></a>
+        <ul class="nav nav-second-level collapse">
+            <li class="@yield('tipoempleado-active')"><a href="{{ route('tipoempleado.index') }}"><i
+                        class="fa fa-building" aria-hidden="true"></i>Tipos de Empleados</a></li>
+        </ul>
+        <ul class="nav nav-second-level collapse">
+            <li class="@yield('empleado-active')"><a href="{{ route('empleado.index') }}"><i
+                        class="fa fa-building" aria-hidden="true"></i>Empleados</a></li>
+        </ul>
+    </li>
 </ul>

@@ -21,6 +21,8 @@ class CreateEmpleadoTable extends Migration
             $table->foreign('persona_id')->references('id')->on("persona")->onDelete('cascade');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on("users")->onDelete('cascade');
+            $table->string('url_imagen');
+            $table->string('nombre_imagen');
             $table->timestamps();
         });
     }

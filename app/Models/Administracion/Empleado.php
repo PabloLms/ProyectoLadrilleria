@@ -13,7 +13,9 @@ class Empleado extends Model
     protected $fillable=[
         'tipo_id',
         'persona_id',
-        'user_id'
+        'user_id',
+        'url_imagen',
+        'nombre_imagen'
     ];
     public $timestamps = true;
     public function tipo(){

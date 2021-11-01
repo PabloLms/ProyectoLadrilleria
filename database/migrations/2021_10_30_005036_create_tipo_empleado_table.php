@@ -17,6 +17,7 @@ class CreateTipoEmpleadoTable extends Migration
             $table->id();
             $table->string("tipo");
             $table->mediumText('descripcion');
+            $table->enum('estado',['ACTIVO','ANULADO'])->default('ACTIVO');
             $table->timestamps();
         });
     }

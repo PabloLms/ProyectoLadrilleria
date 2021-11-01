@@ -23,4 +23,8 @@ class Persona extends Model
     {
         return $this->hasOne(PersonaDni::class,'persona_id');
     }
+    public function personaRuc()
+    {
+        return $this->hasOne(PersonaRuc::class,'persona_id');
+    }
 }

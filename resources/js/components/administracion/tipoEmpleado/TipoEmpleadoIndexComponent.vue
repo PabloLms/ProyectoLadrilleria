@@ -24,7 +24,7 @@
                                 <div class="float-right mb-2">
                                     <button
                                         type="button"
-                                        class="btn btn-primary btn-agregar"
+                                        class="btn btn-primary btn-agregar "
                                         @click="openModalStore"
                                     >
                                         <i
@@ -36,8 +36,7 @@
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                <datatabletipoempleado-component
-                                    :productos="productos"
+                                <datatabletipoempleado-component ref="datatableTipoEmpleado"
                                 ></datatabletipoempleado-component>
                             </div>
                         </div>
@@ -70,11 +69,42 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="">Tipo</label>
-                            <input type="text" class="form-control form-control-sm" v-model="tipo">
+                            <input
+                                type="text"
+                                class="form-control form-control-sm"
+                                :class="errores.tipo.error ? 'is-invalid' : ''"
+                                v-model="tipo"
+                            />
+                            <span
+                                class="invalid-feedback"
+                                role="alert"
+                                v-if="errores.tipo.error"
+                            >
+                                <strong>{{ errores.tipo.mensaje }}</strong>
+                            </span>
                         </div>
                         <div class="form-group">
                             <label for="">Descripcion</label>
-                            <textarea cols="30" rows="2" v-model="descripcion" class="form-control"></textarea>
+                            <textarea
+                                cols="30"
+                                rows="2"
+                                v-model="descripcion"
+                                class="form-control"
+                                :class="
+                                    errores.descripcion.error
+                                        ? 'is-invalid'
+                                        : ''
+                                "
+                            ></textarea>
+                            <span
+                                class="invalid-feedback"
+                                role="alert"
+                                v-if="errores.descripcion.error"
+                            >
+                                <strong>{{
+                                    errores.descripcion.mensaje
+                                }}</strong>
+                            </span>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -85,7 +115,11 @@
                         >
                             Cerrar
                         </button>
-                        <button type="button" class="btn btn-primary">
+                        <button
+                            type="button"
+                            class="btn btn-primary"
+                            @click="storeTipoEmpleado"
+                        >
                             Guardar
                         </button>
                     </div>
@@ -100,15 +134,82 @@ export default {
     components: { DatatableTipoEmpleadoComponent },
     data() {
         return {
-            tipo:"",
-            descripcion:"",
-            productos: [],
+            tipo: "",
+            descripcion: "",
+            errores: {
+                tipo: {
+                    error: false,
+                    mensaje: "",
+                },
+                descripcion: {
+                    error: false,
+                    mensaje: "",
+                },
+            },
         };
     },
-    mounted() {},
+    mounted() {
+    },
     methods: {
         openModalStore: function () {
+            this.limpiarErrores();
             $("#modalCreate").modal("show");
+        },
+        storeTipoEmpleado: function () {
+            this.limpiarErrores();
+            var $this = this;
+            if (this.validaciones()) {
+                var formdata = new FormData();
+                formdata.append("tipo", this.tipo);
+                formdata.append("descripcion", this.descripcion);
+                axios
+                    .post(route("tipoempleado.store"), formdata)
+                    .then((value) => {
+                        if (value.data.success) {
+                            $this.$refs.datatableTipoEmpleado.recargar()
+                            $this.limpiarModalCreate();
+                            $("#modalCreate").modal("hide");
+                        } else {
+                            console.log(value.data.mensaje);
+                            toastr.error("Ocurrio un Error", "Error");
+                        }
+                    })
+                    .catch((value) => {
+                        toastr.error(value);
+                    });
+            }
+        },
+        validaciones: function () {
+            var $this = this;
+            var resultado = true;
+            if (this.tipo.length == 0) {
+                this.errores.tipo.error = true;
+                this.errores.tipo.mensaje = "Falta ingresar tipo";
+                resultado = false;
+            }
+            if (this.descripcion.length == 0) {
+                this.errores.descripcion.error = true;
+                this.errores.descripcion.mensaje = "Falta ingresar descripcion";
+                resultado = false;
+            }
+            return !resultado ? false : true;
+        },
+        limpiarModalCreate: function () {
+            this.tipo = "";
+            this.descripcion = "";
+            this.limpiarErrores();
+        },
+        limpiarErrores: function () {
+            this.errores = {
+                tipo: {
+                    error: false,
+                    mensaje: "",
+                },
+                descripcion: {
+                    error: false,
+                    mensaje: "",
+                },
+            };
         },
     },
 };
