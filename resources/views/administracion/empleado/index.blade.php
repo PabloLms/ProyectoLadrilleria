@@ -3,8 +3,8 @@
 @section('administracion-active', 'active')
 @section('empleado-active', 'active')
 <div id="app">
-    <empleadoindex-component>
-    </empleadoindex-component>
+    <empleado-index-component>
+    </empleado-index-component>
 </div>
 @endsection
 @section('css-vue')

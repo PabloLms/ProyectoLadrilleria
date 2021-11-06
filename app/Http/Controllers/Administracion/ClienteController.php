@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\Administracion;
 
 use App\Http\Controllers\Controller;
-use App\Models\Administracion\Empleado;
+use App\Models\Administracion\Cliente;
 use App\Models\Administracion\Persona;
 use App\Models\Administracion\PersonaDni;
 use App\Models\Administracion\PersonaRuc;
-use App\Models\Administracion\TipoEmpleado;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -17,33 +16,32 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Yajra\DataTables\Facades\DataTables;
 
-class EmpleadoController extends Controller
+class ClienteController extends Controller
 {
     public function index()
     {
-        return view('administracion.empleado.index');
+        return view('administracion.cliente.index');
     }
     public function getList()
     {
-        $empleados = DB::table('empleado as e')
+        $clientes = DB::table('cliente as e')
             ->join('persona as p', 'p.id', '=', 'e.persona_id')
             ->select('e.id')
             ->where('p.estado', 'ACTIVO')->get()->map(function ($value) {
-                $empleado = Empleado::findOrFail($value->id);
+                $cliente=Cliente::findOrFail($value->id);
                 return array(
-                    "id" => $empleado->id,
-                    "nombre" => $empleado->persona->personaDni ? $empleado->persona->personaDni->nombres_apellidos() : $empleado->persona->personaRuc->nombre_comercial,
-                    "documento" => $empleado->persona->personaDni ? $empleado->persona->personaDni->dni : $empleado->persona->personaRuc->ruc,
-                    "direccion" => $empleado->persona->direccion,
-                    "telefono" => $empleado->persona->telefono,
+                    "id" => $cliente->id,
+                    "nombre" => $cliente->persona->personaDni ? $cliente->persona->personaDni->nombres_apellidos() : $cliente->persona->personaRuc->nombre_comercial,
+                    "documento" => $cliente->persona->personaDni ? $cliente->persona->personaDni->dni : $cliente->persona->personaRuc->ruc,
+                    "direccion" => $cliente->persona->direccion,
+                    "telefono" => $cliente->persona->telefono,
                 );
             });
-        return DataTables::of($empleados)->toJson();
+        return DataTables::of($clientes)->toJson();
     }
     public function create()
     {
-        $tiposEmpleado = TipoEmpleado::where('estado', 'ACTIVO')->get();
-        return view('administracion.empleado.create', ["tiposEmpleado" => $tiposEmpleado]);
+        return view('administracion.cliente.create');
     }
     public function store(Request $request)
     {
@@ -55,29 +53,31 @@ class EmpleadoController extends Controller
             'distrito' => 'required',
             'direccion' => 'required',
             'fecha_nacimiento' => 'required',
+            // 'numero_documento' => 'required',
             'genero' => 'required',
             'estado_civil' => 'required',
-            'email' => ['required', 'email:rfc,dns', Rule::unique('users', 'email')->where(function ($query) {
-            })],
-            'password' => ['required', 'same:confirm_password'],
-            'confirm_password' => 'required',
+            // 'email' => ['required', 'email:rfc,dns', Rule::unique('users', 'email')->where(function ($query) {
+            // })],
+            // 'password' => ['required', 'same:confirm_password'],
+            // 'confirm_password' => 'required',
         ];
         $message = [
             'departamento.required' => 'El Campo departamento es Obligatorio',
             'provincia.required' => 'El Campo provincia es Obligatorio',
             'distrito.required' => 'El Campo distrito es Obligatorio',
+            // 'numero_documento.required' => 'El Campo numero_documento es Obligatorio',
             'telefono.required' => 'El Campo telefono es Obligatorio',
             'telefono.numeric' => 'El Campo telefono debe ser numerico',
             'direccion.required' => 'El Campo direccion es Obligatorio',
             'fecha_nacimiento.required' => 'El Campo Fecha es Obligatorio',
             'estado_civil.required' => 'El Campo estado Civil es Obligatorio',
-            'email.required' => 'El Campo email es Obligatorio',
-            'email.unique' => 'El Campo email ya esta registrado',
-            'email.email' => 'formato no valido',
+            // 'email.required' => 'El Campo email es Obligatorio',
+            // 'email.unique' => 'El Campo email ya esta registrado',
+            // 'email.email' => 'formato no valido',
             'genero.required' => 'El Campo genero es Obligatorio',
-            'password.required' => 'El Campo password es Obligatorio',
-            'password.same' => 'No coinciden los campos de contraseña',
-            'confirm_password.required' => 'El Campo password es Obligatorio',
+            // 'password.required' => 'El Campo password es Obligatorio',
+            // 'password.same' => 'No coinciden los campos de contraseña',
+            // 'confirm_password.required' => 'El Campo password es Obligatorio',
         ];
         if ($request->tipo_documento == "DNI") {
             $rules += array("nombres" => "required");
@@ -126,38 +126,30 @@ class EmpleadoController extends Controller
                 $persona_ruc->persona_id = $persona->id;
                 $persona_ruc->save();
             }
-            $usuario = new User();
-            $usuario->name = $request->email;
-            $usuario->email = $request->email;
-            $usuario->password = bcrypt($request->password);
-            $usuario->save();
-            $empleado = new Empleado();
-            $empleado->tipo_id = $request->tipo;
-            $empleado->persona_id = $persona->id;
-            $empleado->user_id = $usuario->id;
+            $cliente = new Cliente();
+            $cliente->persona_id = $persona->id;
             if ($request->hasFile('logo')) {
                 $file = $request->file('logo');
                 $name = $file->getClientOriginalName();
-                $empleado->nombre_imagen = $name;
-                $empleado->url_imagen = $request->file('logo')->store('public/empleados');
+                $cliente->nombre_imagen = $name;
+                $cliente->url_imagen = $request->file('logo')->store('public/clientes');
             }
-            $empleado->save();
+            $cliente->save();
             DB::commit();
         } catch (Exception $e) {
             DB::rollback();
             Log::info($e->getMessage());
         }
-        return redirect()->route('empleado.index');
+        return redirect()->route('cliente.index');
     }
     public function edit($id)
     {
-        $empleado = Empleado::findOrFail($id);
-        $tiposEmpleado = TipoEmpleado::where('estado', 'ACTIVO')->get();
-        return view('administracion.empleado.edit', ["empleado" => $empleado, "tiposEmpleado" => $tiposEmpleado]);
+        $cliente = Cliente::findOrFail($id);
+        return view('administracion.cliente.edit', ["cliente" => $cliente]);
     }
     public function update(Request $request, $id)
     {
-        $empleado = Empleado::findOrFail($id);
+        $cliente = Cliente::findOrFail($id);
         $data = $request->all();
         $rules = [
             'telefono' => ['required', 'numeric'],
@@ -169,8 +161,8 @@ class EmpleadoController extends Controller
             // 'numero_documento' => 'required',
             'genero' => 'required',
             'estado_civil' => 'required',
-            'email' => ['required', 'email:rfc,dns'],
-            'password' => ['same:confirm_password'],
+            // 'email' => ['required', 'email:rfc,dns'],
+            // 'password' => ['same:confirm_password'],
             // 'confirm_password' => 'required',
         ];
         $message = [
@@ -183,28 +175,28 @@ class EmpleadoController extends Controller
             'direccion.required' => 'El Campo direccion es Obligatorio',
             'fecha_nacimiento.required' => 'El Campo Fecha es Obligatorio',
             'estado_civil.required' => 'El Campo estado Civil es Obligatorio',
-            'email.required' => 'El Campo email es Obligatorio',
+            // 'email.required' => 'El Campo email es Obligatorio',
             // 'email.unique' => 'El Campo email ya esta registrado',
-            'email.email' => 'formato no valido',
+            // 'email.email' => 'formato no valido',
             'genero.required' => 'El Campo genero es Obligatorio',
             // 'password.required' => 'El Campo password es Obligatorio',
-            'password.same' => 'No coinciden los campos de contraseña',
+            // 'password.same' => 'No coinciden los campos de contraseña',
             // 'confirm_password.required' => 'El Campo password es Obligatorio',
         ];
         if ($request->tipo_documento == "DNI") {
             $rules += array("nombres" => "required");
             $rules += array("apellidos" => "required");
-            $rules += array("numero_documento" => ['required',Rule::unique('persona_dni', 'dni')->ignore($empleado->persona->personaDni->id)]);
+            $rules += array("numero_documento" => ['required',Rule::unique('persona_dni', 'dni')->ignore($cliente->persona->personaDni->id)]);
+
 
             $message += array("nombres.required" => "El Campo nombre es Obligatorio");
             $message += array("apellidos.required" => "El Campo Apellidos es Obligatorio");
             $message += array('numero_documento.required' => 'El Campo numero_documento es Obligatorio');
             $message += array("numero_documento.unique"=>"El numero documento ya esta registrado");
-
         } else {
             $rules += array("nombre_comercial" => "required");
             $rules += array("razon_social" => "required");
-            $rules += array("numero_documento" => ['required',Rule::unique('persona_ruc', 'ruc')->ignore($empleado->persona->personaRuc->id)]);
+            $rules += array("numero_documento" => ['required',Rule::unique('persona_ruc', 'ruc')->ignore($cliente->persona->personaRuc->id)]);
 
             $message += array("nombre_comercial.required" => "El Campo nombre comercial es Obligatorio");
             $message += array("razon_social.required" => "El Campo razon social es Obligatorio");
@@ -214,7 +206,7 @@ class EmpleadoController extends Controller
         Validator::make($data, $rules, $message)->validate();
         DB::beginTransaction();
         try {
-            $persona = $empleado->persona;
+            $persona = $cliente->persona;
             $persona->direccion = $request->direccion;
             $persona->telefono = $request->telefono;
             $persona->fecha_nacimiento = $request->fecha_nacimiento;
@@ -236,16 +228,16 @@ class EmpleadoController extends Controller
                 $persona_ruc->save();
             }
             if ($request->get('password')) {
-                $usuario = $empleado->user;
+                $usuario = $cliente->user;
                 $usuario->password = bcrypt($request->password);
                 $usuario->save();
             }
             if ($request->hasFile('logo')) {
                 $file = $request->file('logo');
                 $name = $file->getClientOriginalName();
-                $empleado->nombre_imagen = $name;
-                $empleado->url_imagen = $request->file('logo')->store('public/empleados');
-                $empleado->save();
+                $cliente->nombre_imagen = $name;
+                $cliente->url_imagen = $request->file('logo')->store('public/clientes');
+                $cliente->save();
             }
 
             DB::commit();
@@ -253,13 +245,13 @@ class EmpleadoController extends Controller
             DB::rollback();
             Log::info($e->getMessage());
         }
-        return redirect()->route('empleado.index');
+        return redirect()->route('cliente.index');
     }
     public function destroy($id)
     {
+        DB::beginTransaction();
         try {
-            DB::beginTransaction();
-            Empleado::findOrFail($id)->persona->update([
+            Cliente::findOrFail($id)->persona->update([
                 "estado" => "ANULADO"
             ]);
             DB::commit();

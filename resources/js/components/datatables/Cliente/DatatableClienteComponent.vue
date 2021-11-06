@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-12">
             <table
-                id="tableEmpleados"
+                id="tableClientes"
                 class="table table-striped table-bordered table-hover"
                 style="width: 100%"
             >
@@ -54,7 +54,7 @@ export default {
             }).then((willDelete) => {
                 if (willDelete) {
                                 axios
-                                    .post(route("empleado.destroy", $this.id))
+                                    .post(route("cliente.destroy", $this.id))
                                     .then((value) => {
                                         console.log(value)
                                         if (value.data.success) {
@@ -81,14 +81,14 @@ export default {
     },
     methods: {
         datosInicializado: function () {
-            this.table = $("#tableEmpleados").DataTable({
+            this.table = $("#tableClientes").DataTable({
                 bPaginate: true,
                 bLengthChange: true,
                 bFilter: true,
                 bInfo: true,
                 bAutoWidth: false,
                 processing: true,
-                ajax: route("empleado.getList"),
+                ajax: route("cliente.getList"),
                 language: {
                     url: window.location.origin + "/Spanish.json",
                     // '//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json'
@@ -121,7 +121,7 @@ export default {
                             return (
                                 "<div class='btn-group' style='text-transform:capitalize;'><button data-toggle='dropdown' class='btn btn-danger  btn-sm  dropdown-toggle'><i class='fa fa-bars'></i></button><ul class='dropdown-menu'>" +
                                 "<li><a class='dropdown-item btn-edit' href='" +
-                                route("empleado.edit", data.id) +
+                                route("cliente.edit", data.id) +
                                 "' title='Modificar' ><b><i class='fa fa-edit'></i>Editar</a></b></li>" +
                                 "<li><a class='dropdown-item btn-delete'  title='Eliminar'><b><i class='fa fa-trash'></i> Eliminar</a></b></li>" +
                                 "</ul></div>"

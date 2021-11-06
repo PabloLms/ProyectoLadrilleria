@@ -30,16 +30,12 @@ Vue.use(plugin);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component(
-    "example-component",
-    require("./components/ExampleComponent.vue").default
-);
-Vue.component(
     "tipoempleadoindex-component",
     require("./components/administracion/tipoEmpleado/TipoEmpleadoIndexComponent.vue")
         .default
 );
 Vue.component(
-    "empleadoindex-component",
+    "empleado-index-component",
     require("./components/administracion/Empleado/EmpleadoIndexComponent.vue")
         .default
 );
@@ -49,8 +45,13 @@ Vue.component(
         .default
 );
 Vue.component(
-    "apiindex-component",
+    "api-index-component",
     require("./components/administracion/Api/ApiIndexComponent.vue")
+        .default
+);
+Vue.component(
+    "cliente-index-component",
+    require("./components/administracion/Cliente/ClienteIndexComponent.vue")
         .default
 );
 //Datatable
@@ -68,6 +69,10 @@ Vue.component(
 Vue.component(
     "datatableapi-component",
     require("./components/datatables/Api/DatatableApiComponent.vue")
+)
+Vue.component(
+    "datatablecliente-component",
+    require("./components/datatables/Cliente/DatatableClienteComponent.vue")
 )
 /**
  * Next, we will create a fresh Vue application instance and attach it to

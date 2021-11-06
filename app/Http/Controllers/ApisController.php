@@ -50,19 +50,19 @@ class ApisController extends Controller
     public function apiDni($documento)
     {
         // return $documento;
-        // $apiDni=Apis::findOrFail(1);
-        // $url = $apiDni->http . $documento;
-        // $client = new \GuzzleHttp\Client(['verify' => false]);
-        // $response = $client->get($url, [
-        //     'headers' => [
-        //         'Content-Type' => 'application/json',
-        //         'Accept' => 'application/json',
-        //         'Authorization' => "Bearer {$apiDni->token}"
-        //     ]
-        // ]);
-        // $data = $response->getBody()->getContents();
+        $apiDni=Apis::findOrFail(1);
+        $url = $apiDni->http . $documento;
+        $client = new \GuzzleHttp\Client(['verify' => false]);
+        $response = $client->get($url, [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json',
+                'Authorization' => "Bearer {$apiDni->token}"
+            ]
+        ]);
+        $data = $response->getBody()->getContents();
         // Log::info($data);
-        return Apis::findOrFail(1);
+        return $data;
     }
     public function apiRuc($documento)
     {

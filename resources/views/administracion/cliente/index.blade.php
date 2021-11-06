@@ -1,10 +1,10 @@
 @extends('layout.index')
 @section('contenido')
 @section('administracion-active', 'active')
-@section('api-active', 'active')
+@section('cliente-active', 'active')
 <div id="app">
-    <api-index-component>
-    </api-index-component>
+    <cliente-index-component>
+    </cliente-index-component>
 </div>
 @endsection
 @section('css-vue')

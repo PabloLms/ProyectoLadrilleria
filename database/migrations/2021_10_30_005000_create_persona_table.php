@@ -16,7 +16,7 @@ class CreatePersonaTable extends Migration
         Schema::create('persona', function (Blueprint $table) {
             $table->id();
             $table->enum("tipo_documento",['RUC','DNI']);
-            $table->string("direccion")->nullable();
+            $table->mediumText("direccion")->nullable();
             $table->string('telefono')->nullable();
             $table->date('fecha_nacimiento')->nullable();
             $table->enum('genero',['M','F']);

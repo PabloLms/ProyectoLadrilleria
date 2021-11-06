@@ -6,8 +6,6 @@ $(document).ready(function () {
         width: "100%",
     });
     verificarTipoDocumento();
-    getProvincias();
-
 });
 $("#form").steps({
     bodyTag: "fieldset",
@@ -49,52 +47,16 @@ function resizeJquerySteps() {
         "slow"
     );
 }
-function limpiar() {
-    $(".logo").attr("src", "{{asset('storage/empresas/logos/default.jpg')}}");
-    var fileName = "Seleccionar";
-    $(".custom-file-label").addClass("selected").html(fileName);
-    $("#logo").val("");
-}
-function seleccionarimagen() {
-    var fileInput = document.getElementById("logo");
-    var filePath = fileInput.value;
-    var allowedExtensions = /(.jpg|.jpeg|.png)$/i;
-    $imagenPrevisualizacion = document.querySelector(".logo");
-    if (allowedExtensions.exec(filePath)) {
-        var userFile = document.getElementById("logo");
-        userFile.src = URL.createObjectURL(event.target.files[0]);
-        var data = userFile.src;
-        $imagenPrevisualizacion.src = data;
-        let fileName = $("#logo").val().split("\\").pop();
-        $("#logo")
-            .next(".custom-file-label")
-            .addClass("selected")
-            .html(fileName);
-    } else {
-        toastr.error(
-            "Extensión inválida, formatos admitidos (.jpg . jpeg . png)",
-            "Error"
-        );
-        $(".logo").attr(
-            "src",
-            "{{asset('storage/empresas/logos/default.png')}}"
-        );
-    }
-}
 $("#departamento").on("change", getProvincias);
 $("#provincia").on("change", getDistritos);
 async function getProvincias() {
     var departamento = $("#departamento").val();
     await axios.get(route('ubigeo.getProvincias', departamento)).then((value) => {
-
+        loading()
         $("#provincia").empty();
-        // $("#provincia")
-        //     .val(null)
-        //     .trigger("change");
         var datos = value.data;
         datos.forEach((value, index, array) => {
             var newOption = new Option(value.nombre, value.id, false, false);
-            // Append it to the select
             $("#provincia")
                 .append(newOption);
         });
@@ -106,18 +68,14 @@ function getDistritos() {
     var provincia = $("#provincia").val();
     axios.get(route('ubigeo.getDistritos', provincia)).then((value) => {
         $("#distrito").empty();
-        // $("#distrito")
-        //     .val(null)
-        //     .trigger("change");
         var datos = value.data;
         datos.forEach((value, index, array) => {
             var newOption = new Option(value.nombre, value.id, false, false);
-            // Append it to the select
             $("#distrito")
                 .append(newOption);
         });
         $("#distrito").trigger("change")
-
+        loading()
     })
 }
 $("#consultarDocumento").on("click", function () {
@@ -132,11 +90,8 @@ $("#consultarDocumento").on("click", function () {
                 text: "Buscar",
                 closeModal: false,
             },
-            // button:"Consultar",
-            //dangerMode: false,
         })
             .then(() => {
-
                 return fetch(url);
             })
             .then(results => {
@@ -164,20 +119,11 @@ $("#consultarDocumento").on("click", function () {
                     swal.close();
                 }
             });
+
     }
     else {
         toastr.error("Ingrese el numero de documento");
     }
-    // swal({
-    //     title:"",
-    //     text:"",
-    //     icon: window.location.origin+"/img/loading.gif",
-    //     buttons: false,
-    //     closeOnClickOutside: false,
-    //     // timer: 3000,
-    //     //icon: "success"
-    // });
-
 
 });
 function loading() {

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Administracion\ClienteController;
 use App\Http\Controllers\Administracion\EmpleadoController;
 use App\Http\Controllers\Administracion\TipoEmpleadoController;
 use App\Http\Controllers\ApisController;
@@ -42,6 +43,15 @@ Route::prefix('empleado')->middleware('auth')->group(function(){
     Route::post('/update/{id}',[EmpleadoController::class, 'update'])->name('empleado.update');
     Route::post('/destroy/{id}',[EmpleadoController::class, 'destroy'])->name('empleado.destroy');
     Route::get('/getList',[EmpleadoController::class,'getList'])->name('empleado.getList');
+});
+Route::prefix('cliente')->middleware('auth')->group(function(){
+    Route::get('/', [ClienteController::class, 'index'])->name('cliente.index');
+    Route::get('/create', [ClienteController::class, 'create'])->name('cliente.create');
+    Route::post('/store',[ClienteController::class, 'store'])->name('cliente.store');
+    Route::get('/edit/{id}', [ClienteController::class, 'edit'])->name('cliente.edit');
+    Route::post('/update/{id}',[ClienteController::class, 'update'])->name('cliente.update');
+    Route::post('/destroy/{id}',[ClienteController::class, 'destroy'])->name('cliente.destroy');
+    Route::get('/getList',[ClienteController::class,'getList'])->name('cliente.getList');
 });
 Route::prefix('api')->middleware('auth')->group(function(){
     Route::get('/',[ApisController::class,'index'])->name('api.index');

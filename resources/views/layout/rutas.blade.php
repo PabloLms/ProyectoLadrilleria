@@ -38,7 +38,7 @@
                         class="fa fa-users" aria-hidden="true"></i>Proveedores</a></li>
         </ul>
         <ul class="nav nav-second-level collapse">
-            <li class="@yield('cliente-active')"><a href="#"><i
+            <li class="@yield('cliente-active')"><a href="{{ route('cliente.index') }}"><i
                         class="fa fa-users" aria-hidden="true"></i>Clientes</a></li>
         </ul>
         <ul class="nav nav-second-level collapse">

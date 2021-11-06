@@ -135,72 +135,39 @@ $("#consultarDocumento").on("click", function () {
             // button:"Consultar",
             //dangerMode: false,
         })
-            .then(name => {
-                if (!name) throw null;
-
-                return fetch(`https://itunes.apple.com/search?term=${name}&entity=movie`);
+            .then(() => {
+                return fetch(url);
             })
             .then(results => {
                 return results.json();
             })
             .then(json => {
-                const movie = json.results[0];
-
-                if (!movie) {
-                    return swal("No movie was found!");
+                var datos = json.data;
+                if ($("#tipo_documento").val() == "DNI") {
+                    $("#nombres").val(datos.nombres)
+                    $("#apellidos").val(datos.apellido_paterno + " " + datos.apellido_materno)
+                    $("#direccion").val(datos.direccion)
                 }
-
-                const name = movie.trackName;
-                const imageURL = movie.artworkUrl100;
-
-                swal({
-                    title: "Top result:",
-                    text: name,
-                    icon: imageURL,
-                });
+                else {
+                    $("#nombre_comercial").val(datos.nombre_o_razon_social)
+                    $("#razon_social").val(datos.nombre_o_razon_social)
+                    $("#direccion").val(datos.direccion)
+                }
+                swal.close();
             })
             .catch(err => {
                 if (err) {
-                    swal("Oh noes!", "The AJAX request failed!", "error");
+                    swal("Oh no!", "Ocurrio un Error", "error");
                 } else {
                     swal.stopLoading();
                     swal.close();
                 }
             });
-        // .then(() => {
-        //     return fetch(url);
-        // }).then(results => {
-        //     console.log(results.json())
-        //     return results.json();
-        // })
-        //     .then(json => {
-        //         console.log(json)
-        //         swal.stopLoading();
-        //         swal.close();
-        //     })
-        //     .catch(err => {
-        //         console.log(err)
-        //         if (err) {
-        //             swal("Oh no!...", "Ocurrior un Problema ", "error");
-        //         } else {
-        //             swal.stopLoading();
-        //             swal.close();
-        //         }
-        //     });
+
     }
     else {
         toastr.error("Ingrese el numero de documento");
     }
-    // swal({
-    //     title:"",
-    //     text:"",
-    //     icon: window.location.origin+"/img/loading.gif",
-    //     buttons: false,
-    //     closeOnClickOutside: false,
-    //     // timer: 3000,
-    //     //icon: "success"
-    // });
-
 
 });
 function loading() {
