@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\Administracion\EmpleadoController;
 use App\Http\Controllers\Administracion\TipoEmpleadoController;
+use App\Http\Controllers\ApisController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Ubigeo\UbigeoController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -24,14 +26,15 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::prefix('tipoempleado')->group(function(){
+Route::prefix('tipoempleado')->middleware('auth')->group(function(){
     Route::get('/', [TipoEmpleadoController::class, 'index'])->name('tipoempleado.index');
     Route::post('/store',[TipoEmpleadoController::class, 'store'])->name('tipoempleado.store');
     Route::post('/update/{id}',[TipoEmpleadoController::class, 'update'])->name('tipoempleado.update');
     Route::post('/destroy/{id}',[TipoEmpleadoController::class, 'destroy'])->name('tipoempleado.destroy');
     Route::get('/getList',[TipoEmpleadoController::class,'getList'])->name('tipoempleado.getList');
+    Route::get('/verify',[TipoEmpleadoController::class,'verify'])->name('tipoempleado.verify');
 });
-Route::prefix('empleado')->group(function(){
+Route::prefix('empleado')->middleware('auth')->group(function(){
     Route::get('/', [EmpleadoController::class, 'index'])->name('empleado.index');
     Route::get('/create', [EmpleadoController::class, 'create'])->name('empleado.create');
     Route::post('/store',[EmpleadoController::class, 'store'])->name('empleado.store');
@@ -39,4 +42,18 @@ Route::prefix('empleado')->group(function(){
     Route::post('/update/{id}',[EmpleadoController::class, 'update'])->name('empleado.update');
     Route::post('/destroy/{id}',[EmpleadoController::class, 'destroy'])->name('empleado.destroy');
     Route::get('/getList',[EmpleadoController::class,'getList'])->name('empleado.getList');
+});
+Route::prefix('api')->middleware('auth')->group(function(){
+    Route::get('/',[ApisController::class,'index'])->name('api.index');
+    Route::post('/store',[ApisController::class,'index'])->name('api.store');
+    Route::post('/update/{id}',[ApisController::class, 'update'])->name('api.update');
+    Route::post('/destroy/{id}',[ApisController::class, 'destroy'])->name('api.destroy');
+    Route::get('/getList',[ApisController::class,'getList'])->name('api.getList');
+    Route::get('/apiDni/{documento}',[ApisController::class,'apiDni'])->name('api.getDni');
+    Route::get('/apiRuc/{documento}',[ApisController::class,'apiRuc'])->name('api.getRuc');
+
+});
+Route::prefix('ubigeo')->middleware('auth')->group(function(){
+    Route::get('getprovincias/{departamentoid}',[UbigeoController::class,'getProvincias'])->name('ubigeo.getProvincias');
+    Route::get('getdistritos/{provinciaid}',[UbigeoController::class,'getDistritos'])->name('ubigeo.getDistritos');
 });

@@ -44,38 +44,68 @@ export default {
         $(document).on("click", ".btn-delete", function (e) {
             var datos = $this.table.row($(this).closest("tr")).data();
             $this.id = datos.id;
-            swal(
-                {
-                    title: "Esta seguro?",
-                    text: "Eliminar Empleado",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#FF4400",
-                    confirmButtonText: "Si, Eliminar",
-                    cancelButtonText: "No, Cancelar",
-                    closeOnConfirm: false,
-                    closeOnCancel: false,
-                },
-                function (isConfirm) {
-                    if (isConfirm) {
-                        axios
-                            .post(route("empleado.destroy", $this.id))
-                            .then((value) => {
-                                if (value.data.success) {
-                                    $this.table.ajax.reload();
-                                } else {
-                                    console.log(value.data.mensaje);
-                                    toastr.error("Ocurrio un Error", "Error");
-                                }
-                            })
-                            .catch((value) => {
-                                toastr.error(value);
-                            });
-                    } else {
-                        swal("Cancelado", "No se ha eliminado", "error");
-                    }
+
+            swal({
+                title: "Estas seguro?",
+                text: "Eliminar Registro!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            }).then((willDelete) => {
+                if (willDelete) {
+                                axios
+                                    .post(route("empleado.destroy", $this.id))
+                                    .then((value) => {
+                                        console.log(value)
+                                        if (value.data.success) {
+                                            $this.table.ajax.reload();
+                                        } else {
+                                            console.log(value.data.mensaje);
+                                            toastr.error("Ocurrio un Error", "Error");
+                                        }
+                                    })
+                                    .catch((value) => {
+                                        toastr.error(value);
+                                    });
+                    // swal("Poof! Your imaginary file has been deleted!", {
+                    //     icon: "success",
+                    // });
+                } else {
+                    swal("Cancelado", "No se ha eliminado", "error");
                 }
-            );
+            });
+            // swal(
+            //     {
+            //         title: "Esta seguro?",
+            //         text: "Eliminar Empleado",
+            //         type: "warning",
+            //         showCancelButton: true,
+            //         confirmButtonColor: "#FF4400",
+            //         confirmButtonText: "Si, Eliminar",
+            //         cancelButtonText: "No, Cancelar",
+            //         closeOnConfirm: false,
+            //         closeOnCancel: false,
+            //     },
+            //     function (isConfirm) {
+            //         if (isConfirm) {
+            //             // axios
+            //             //     .post(route("empleado.destroy", $this.id))
+            //             //     .then((value) => {
+            //             //         if (value.data.success) {
+            //             //             $this.table.ajax.reload();
+            //             //         } else {
+            //             //             console.log(value.data.mensaje);
+            //             //             toastr.error("Ocurrio un Error", "Error");
+            //             //         }
+            //             //     })
+            //             //     .catch((value) => {
+            //             //         toastr.error(value);
+            //             //     });
+            //         } else {
+            //             swal("Cancelado", "No se ha eliminado", "error");
+            //         }
+            //     }
+            // );
         });
         $(document).on("click", ".btn-edit", function (e) {
             var datos = $this.table.row($(this).closest("tr")).data();
@@ -120,10 +150,11 @@ export default {
                         data: null,
                         className: "text-center",
                         render: function (data) {
-                            console.log(data)
                             return (
                                 "<div class='btn-group' style='text-transform:capitalize;'><button data-toggle='dropdown' class='btn btn-danger  btn-sm  dropdown-toggle'><i class='fa fa-bars'></i></button><ul class='dropdown-menu'>" +
-                                "<li><a class='dropdown-item btn-edit' href='"+route('empleado.edit',data.id)+"' title='Modificar' ><b><i class='fa fa-edit'></i>Editar</a></b></li>" +
+                                "<li><a class='dropdown-item btn-edit' href='" +
+                                route("empleado.edit", data.id) +
+                                "' title='Modificar' ><b><i class='fa fa-edit'></i>Editar</a></b></li>" +
                                 "<li><a class='dropdown-item btn-delete'  title='Eliminar'><b><i class='fa fa-trash'></i> Eliminar</a></b></li>" +
                                 "</ul></div>"
                             );

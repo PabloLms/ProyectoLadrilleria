@@ -19,5 +19,11 @@ class UsuarioAdminSeeder extends Seeder
         $usuario->email="admin@ladrilleria.com";
         $usuario->password=bcrypt('123456789');
         $usuario->save();
+
+        $usuario = new User();
+        $usuario->name="gerente";
+        $usuario->email="gerente@ladrilleria.com";
+        $usuario->password=bcrypt('123456789');
+        $usuario->save();
     }
 }

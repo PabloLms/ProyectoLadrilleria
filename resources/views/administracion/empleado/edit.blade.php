@@ -24,8 +24,10 @@
         <div class="col-md-12">
             <div class="ibox">
                 <div class="ibox-content">
+                    {{$errors}}
                     <h2>Crear Empleado</h2>
-                    <form id="form" action="{{route('empleado.update',$empleado->id)}}" method="POST" class="wizard-big" enctype="multipart/form-data">
+                    <form id="form" action="{{ route('empleado.update', $empleado->id) }}" method="POST"
+                        class="wizard-big" enctype="multipart/form-data">
                         @csrf
                         <h1>Datos Personales</h1>
                         <fieldset>
@@ -34,42 +36,85 @@
                                     <div class="row">
                                         <div class="col-md-6 form-group">
                                             <label for="">Tipo de Documento</label>
-                                            <select id="tipo_documento" name="tipo_documento"
-                                                class="select2_form form-control" disabled>
-                                                <option value="DNI" {{$empleado->persona->tipo_documento=="DNI"?"selected":""}}>
+                                            {{-- <select id="tipo_documento" name="tipo_documento"
+                                                class="select2_form form-control" readonly>
+                                                <option value="DNI"
+                                                    {{ $empleado->persona->tipo_documento == 'DNI' ? 'selected' : '' }}>
                                                     Dni
                                                 </option>
-                                                <option value="RUC" {{$empleado->persona->tipo_documento=="RUC"?"selected":""}}>
+                                                <option value="RUC"
+                                                    {{ $empleado->persona->tipo_documento == 'RUC' ? 'selected' : '' }}>
                                                     Ruc
                                                 </option>
-                                            </select>
+                                            </select> --}}
+                                            <input type="text" class="form-control" id="tipo_documento" name="tipo_documento" readonly value="{{$empleado->persona->tipo_documento}}">
                                         </div>
                                         <div class="col-md-6 form-group">
                                             <label for="">Numero de Documento</label>
-                                            <input type="text" name="numero_documento" id="numero_documento" value="{{old('numero_documento',$empleado->persona->personaDni?$empleado->persona->personaDni->dni:$empleado->persona->personaRuc->ruc)}}"
+                                            <input type="text" name="numero_documento" id="numero_documento"
+                                                value="{{ old('numero_documento', $empleado->persona->personaDni ? $empleado->persona->personaDni->dni : $empleado->persona->personaRuc->ruc) }}"
                                                 class="form-control" />
                                         </div>
                                     </div>
                                     <div class="row div-dni">
                                         <div class="col-md-6">
                                             <label for="">Nombres</label>
-                                            <input type="text" name="nombres" id="nombres" class="form-control" value="{{old('nombres',$empleado->persona->personaDni?$empleado->persona->personaDni->nombres:"")}}"/>
+                                            <input type="text" name="nombres" id="nombres" class="form-control"
+                                                value="{{ old('nombres', $empleado->persona->personaDni ? $empleado->persona->personaDni->nombres : '') }}" />
                                         </div>
                                         <div class="col-md-6">
                                             <label for="">Apellidos</label>
-                                            <input type="text" name="apellidos" id="apellidos" class="form-control" value="{{old('apellidos',$empleado->persona->personaDni?$empleado->persona->personaDni->apellidos:"")}}"/>
+                                            <input type="text" name="apellidos" id="apellidos" class="form-control"
+                                                value="{{ old('apellidos', $empleado->persona->personaDni ? $empleado->persona->personaDni->apellidos : '') }}" />
                                         </div>
                                     </div>
                                     <div class="row div-ruc">
                                         <div class="col-md-12">
                                             <label for="">Nombre Comercial</label>
                                             <input type="text" name="nombre_comercial" id="nombre_comercial"
-                                                class="form-control" value="{{old('nombre_comercial',$empleado->persona->personaDni?"":$empleado->persona->personaRuc->nombre_comercial)}}"/>
+                                                class="form-control"
+                                                value="{{ old('nombre_comercial', $empleado->persona->personaDni ? '' : $empleado->persona->personaRuc->nombre_comercial) }}" />
                                         </div>
                                         <div class="col-md-12">
                                             <label for="">Razon Social</label>
-                                            <input type="text" name="razon_social" id="razon_social" value="{{old('razon_social',$empleado->persona->personaDni?"":$empleado->persona->personaRuc->nombre_comercial)}}"
+                                            <input type="text" name="razon_social" id="razon_social"
+                                                value="{{ old('razon_social', $empleado->persona->personaDni ? '' : $empleado->persona->personaRuc->nombre_comercial) }}"
                                                 class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 form-group">
+                                            <label>Departamento</label>
+                                            <select name="departamento" id="departamento"
+                                                class="form-control select2_form">
+                                                @foreach (getDepartamentos() as $departamento)
+                                                    <option value="{{ $departamento->id }}"
+                                                        {{ $empleado->persona->distrito->provincia->departamento->id == $departamento->id ? 'selected' : '' }}>
+                                                        {{ $departamento->nombre }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <label>Provincia</label>
+                                            <select name="provincia" id="provincia" class="form-control select2_form">
+                                                @foreach ($empleado->persona->distrito->provincia->departamento->provincias as $provincia)
+                                                    <option value="{{ $provincia->id }}"
+                                                        {{ $empleado->persona->distrito->provincia->id == $provincia->id ? 'selected' : '' }}>
+                                                        {{ $provincia->nombre }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <label>Distrito</label>
+                                            <select name="distrito" id="distrito" class="form-control select2_form">
+                                                @foreach ($empleado->persona->distrito->provincia->distritos as $distrito)
+                                                    <option value="{{ $distrito->id }}"
+                                                        {{ $empleado->persona->distrito->id == $distrito->id ? 'selected' : '' }}>
+                                                        {{ $distrito->nombre }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
@@ -77,15 +122,18 @@
                                     <div class="row">
                                         <div class="col-md-12 form-group">
                                             <label for="">Direccion</label>
-                                            <input type="text" name="direccion" id="direccion" class="form-control" value="{{old('direccion',$empleado->persona->direccion)}}"/>
+                                            <input type="text" name="direccion" id="direccion" class="form-control"
+                                                value="{{ old('direccion', $empleado->persona->direccion) }}" />
                                         </div>
                                         <div class="col-md-6 form-group">
                                             <label for="">Telefono</label>
-                                            <input type="number" name="telefono" id="telefono" class="form-control" value="{{old('telefono',$empleado->persona->telefono)}}"/>
+                                            <input type="number" name="telefono" id="telefono" class="form-control"
+                                                value="{{ old('telefono', $empleado->persona->telefono) }}" />
                                         </div>
                                         <div class="col-md-6 form-group">
                                             <label for="">Fecha Nacimiento</label>
-                                            <input type="date" name="fecha_nacimiento" id="fecha_nacimiento" value="{{old('fecha_nacimiento',$empleado->persona->fecha_nacimiento)}}"
+                                            <input type="date" name="fecha_nacimiento" id="fecha_nacimiento"
+                                                value="{{ old('fecha_nacimiento', $empleado->persona->fecha_nacimiento) }}"
                                                 class="form-control" />
                                         </div>
                                         <div class="col-md-6 form-group">
@@ -95,10 +143,12 @@
                                                     select2_form
                                                     form-control
                                                 ">
-                                                <option value="M" {{$empleado->persona->genero=="M"?"selected":""}}>
+                                                <option value="M"
+                                                    {{ $empleado->persona->genero == 'M' ? 'selected' : '' }}>
                                                     Masculino
                                                 </option>
-                                                <option value="F" {{$empleado->persona->genero=="F"?"selected":""}}>
+                                                <option value="F"
+                                                    {{ $empleado->persona->genero == 'F' ? 'selected' : '' }}>
                                                     Femenino
                                                 </option>
                                             </select>
@@ -110,13 +160,16 @@
                                                     select2_form
                                                     form-control
                                                 ">
-                                                <option value="Casado" {{$empleado->persona->estado_civil=="Casado"?"selected":""}}>
+                                                <option value="Casado"
+                                                    {{ $empleado->persona->estado_civil == 'Casado' ? 'selected' : '' }}>
                                                     Casado(a)
                                                 </option>
-                                                <option value="Viudo" {{$empleado->persona->estado_civil=="Viudo"?"selected":""}}>
+                                                <option value="Viudo"
+                                                    {{ $empleado->persona->estado_civil == 'Viudo' ? 'selected' : '' }}>
                                                     Viudo(a)
                                                 </option>
-                                                <option value="Soltero"{{$empleado->persona->estado_civil=="Soltero"?"selected":""}}>
+                                                <option value="Soltero"
+                                                    {{ $empleado->persona->estado_civil == 'Soltero' ? 'selected' : '' }}>
                                                     Soltero(a)
                                                 </option>
                                             </select>
@@ -132,7 +185,8 @@
                                     <div class="row">
                                         <div class="form-group col-md-12">
                                             <label for="">Email</label>
-                                            <input type="email" name="email" id="email" class="form-control" value="{{old('email',$empleado->user->email)}}" readonly>
+                                            <input type="email" name="email" id="email" class="form-control"
+                                                value="{{ old('email', $empleado->user->email) }}" readonly>
                                         </div>
                                         <div class="col-md-6">
                                             <label for="">Password</label>
@@ -147,7 +201,9 @@
                                             <label for="">Tipo de Empleado</label>
                                             <select name="tipo" id="tipo" class="form-control select2_form">
                                                 @foreach ($tiposEmpleado as $tipo)
-                                                    <option value="{{$tipo->id}}" {{$tipo->id==$empleado->tipo_id?"selected":""}}>{{$tipo->tipo}}</option>
+                                                    <option value="{{ $tipo->id }}"
+                                                        {{ $tipo->id == $empleado->tipo_id ? 'selected' : '' }}>
+                                                        {{ $tipo->tipo }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -164,7 +220,8 @@
                                                         onchange="seleccionarimagen()" class="custom-file-input"
                                                         accept="image/*">
                                                     <label for="logo" id="logo_txt" name="logo_txt"
-                                                        class="custom-file-label selected"> {{$empleado->nombre_imagen ? $empleado->nombre_imagen : 'Seleccionar'}}</label>
+                                                        class="custom-file-label selected">
+                                                        {{ $empleado->nombre_imagen ? $empleado->nombre_imagen : 'Seleccionar' }}</label>
                                                     <div class="invalid-feedback"><b><span
                                                                 id="error-logo_mensaje"></span></b></div>
                                                 </div>
@@ -190,8 +247,9 @@
                                         <div class="col-lg-7">
                                             <p>
                                                 <img class="logo" style="width: 100%;"
-                                                src="{{Storage::url($empleado->url_imagen)}}" alt="">
-                                                <input id="url_logo" name="url_logo" type="hidden" value="{{$empleado->url_imagen}}" >
+                                                    src="{{ Storage::url($empleado->url_imagen) }}" alt="">
+                                                <input id="url_logo" name="url_logo" type="hidden"
+                                                    value="{{ $empleado->url_imagen }}">
                                             </p>
                                         </div>
                                     </div>
@@ -216,6 +274,6 @@
 @section('script-custom')
 <script src="{{ asset('Inspinia/js/plugins/steps/jquery.steps.min.js') }}"></script>
 <script src="{{ asset('Inspinia/js/plugins/select2/select2.full.min.js') }}"></script>
-
-<script src="{{ asset('js/Administracion/Empleado/create.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="{{ asset('js/Administracion/Empleado/edit.js') }}"></script>
 @endsection

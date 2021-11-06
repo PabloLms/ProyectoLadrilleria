@@ -41,6 +41,10 @@
             <li class="@yield('cliente-active')"><a href="#"><i
                         class="fa fa-users" aria-hidden="true"></i>Clientes</a></li>
         </ul>
+        <ul class="nav nav-second-level collapse">
+            <li class="@yield('api-active')"><a href="{{route('api.index')}}"><i
+                        class="fa fa-paper-plane" aria-hidden="true"></i>Apis</a></li>
+        </ul>
     </li>
     <li class="@yield('compra-active')">
         <a href="#"><i class="fa fa-cart-plus"></i> <span class="nav-label">Compras</span><span

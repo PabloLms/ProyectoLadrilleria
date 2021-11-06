@@ -4,10 +4,17 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 import Vue from "vue";
-
+import helperJs from "./helpers.js";
 require("./bootstrap");
 
 window.Vue = require("vue").default;
+const plugin = {
+    install() {
+        Vue.helperJs = helperJs;
+        Vue.prototype.$helperJs = helperJs;
+    },
+};
+Vue.use(plugin);
 // const $ = require("jquery");
 // window.$ = $;
 
@@ -41,6 +48,11 @@ Vue.component(
     require("./components/administracion/Empleado/EmpleadoCreateComponent.vue")
         .default
 );
+Vue.component(
+    "apiindex-component",
+    require("./components/administracion/Api/ApiIndexComponent.vue")
+        .default
+);
 //Datatable
 
 Vue.component(
@@ -53,6 +65,10 @@ Vue.component(
     require("./components/datatables/Empleado/DatatableEmpleadoComponent.vue")
         .default
 );
+Vue.component(
+    "datatableapi-component",
+    require("./components/datatables/Api/DatatableApiComponent.vue")
+)
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

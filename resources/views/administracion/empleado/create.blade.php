@@ -22,8 +22,12 @@
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
         <div class="col-md-12">
-            <div class="ibox">
+            <div class="ibox" id="ibox1">
                 <div class="ibox-content">
+                    <div class="sk-spinner sk-spinner-double-bounce">
+                        <div class="sk-double-bounce1"></div>
+                        <div class="sk-double-bounce2"></div>
+                    </div>
                     <h2>Crear Empleado</h2>
                     <form id="form" action="{{ route('empleado.store') }}" method="POST" class="wizard-big"
                         enctype="multipart/form-data">
@@ -37,40 +41,108 @@
                                             <label for="">Tipo de Documento</label>
                                             <select id="tipo_documento" name="tipo_documento"
                                                 class="select2_form form-control">
-                                                <option value="DNI">
-                                                    Dni
+                                                <option value="DNI"
+                                                    {{ old('tipo_documento') == 'DNI' ? 'selected' : '' }}>DNI
                                                 </option>
-                                                <option value="RUC">
-                                                    Ruc
+                                                <option value="RUC"
+                                                    {{ old('tipo_documento') == 'RUC' ? 'selected' : '' }}>RUC
                                                 </option>
                                             </select>
                                         </div>
                                         <div class="col-md-6 form-group">
                                             <label for="">Numero de Documento</label>
-                                            <input type="text" name="numero_documento" id="numero_documento" value="{{old('numero_documento')}}"
-                                                class="form-control" />
+                                            <div class="input-group">
+                                                <input type="text" name="numero_documento" id="numero_documento"
+                                                    value="{{ old('numero_documento') }}"
+                                                    class="form-control {{ $errors->has('numero_documento') ? 'is-invalid' : '' }}" />
+                                                <span class="input-group-append"><a style="color:white" href="#" id="consultarDocumento"
+                                                        class="btn btn-primary"><i class="fa fa-search"></i>
+                                                        <span></span></a></span>
+                                            </div>
+                                            @if ($errors->has('numero_documento'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('numero_documento') }}</strong>
+                                                </span>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="row div-dni">
                                         <div class="col-md-6">
                                             <label for="">Nombres</label>
-                                            <input type="text" name="nombres" id="nombres" class="form-control" value="{{old('nombres')}}" />
+                                            <input type="text" name="nombres" id="nombres"
+                                                class="form-control {{ $errors->has('nombres') ? 'is-invalid' : '' }}"
+                                                value="{{ old('nombres') }}" />
+                                            @if ($errors->has('nombres'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('nombres') }}</strong>
+                                                </span>
+                                            @endif
                                         </div>
                                         <div class="col-md-6">
                                             <label for="">Apellidos</label>
-                                            <input type="text" name="apellidos" id="apellidos" class="form-control"  value="{{old('apellidos')}}"/>
+                                            <input type="text" name="apellidos" id="apellidos"
+                                                class="form-control {{ $errors->has('apellidos') ? 'is-invalid' : '' }}"
+                                                value="{{ old('apellidos') }}" />
+                                            @if ($errors->has('apellidos'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('apellidos') }}</strong>
+                                                </span>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="row div-ruc">
                                         <div class="col-md-12">
                                             <label for="">Nombre Comercial</label>
-                                            <input type="text" name="nombre_comercial" id="nombre_comercial" value="{{old('nombre_comercial')}}"
-                                                class="form-control" />
+                                            <input type="text" name="nombre_comercial" id="nombre_comercial"
+                                                value="{{ old('nombre_comercial') }}"
+                                                class="form-control {{ $errors->has('nombre_comercial') ? 'is-invalid' : '' }}" />
+                                            @if ($errors->has('nombre_comercial'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('nombre_comercial') }}</strong>
+                                                </span>
+                                            @endif
                                         </div>
                                         <div class="col-md-12">
                                             <label for="">Razon Social</label>
-                                            <input type="text" name="razon_social" id="razon_social" value="{{old('razon_social')}}"
-                                                class="form-control" />
+                                            <input type="text" name="razon_social" id="razon_social"
+                                                value="{{ old('razon_social') }}"
+                                                class="form-control {{ $errors->has('razon_social') ? 'is-invalid' : '' }}" />
+                                            @if ($errors->has('razon_social'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('razon_social') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 form-group">
+                                            <label>Departamento</label>
+                                            <select name="departamento" id="departamento"
+                                                class="form-control select2_form">
+                                                @foreach (getDepartamentos() as $departamento)
+                                                    <option value="{{ $departamento->id }}">
+                                                        {{ $departamento->nombre }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <label>Provincia</label>
+                                            <select name="provincia" id="provincia" class="form-control select2_form">
+
+                                                {{-- @foreach (getProvincias() as $provincia)
+                                                    <option value="{{ $provincia->id }}">{{ $provincia->nombre }}
+                                                    </option>
+                                                @endforeach --}}
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <label>Distrito</label>
+                                            <select name="distrito" id="distrito" class="form-control select2_form">
+                                                {{-- @foreach (getDistritos() as $distrito)
+                                                    <option value="{{ $distrito->id }}">{{ $distrito->nombre }}
+                                                    </option>
+                                                @endforeach --}}
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
@@ -78,7 +150,8 @@
                                     <div class="row">
                                         <div class="col-md-12 form-group">
                                             <label for="">Direccion</label>
-                                            <input type="text" name="direccion" id="direccion" value="{{old('direccion')}}"
+                                            <input type="text" name="direccion" id="direccion"
+                                                value="{{ old('direccion') }}"
                                                 class="form-control {{ $errors->has('direccion') ? 'is-invalid' : '' }}" />
                                             @if ($errors->has('direccion'))
                                                 <span class="invalid-feedback" role="alert">
@@ -88,7 +161,8 @@
                                         </div>
                                         <div class="col-md-6 form-group">
                                             <label for="">Telefono</label>
-                                            <input type="number" name="telefono" id="telefono" value="{{old('telefono')}}"
+                                            <input type="number" name="telefono" id="telefono"
+                                                value="{{ old('telefono') }}"
                                                 class="form-control {{ $errors->has('telefono') ? 'is-invalid' : '' }}" />
                                             @if ($errors->has('telefono'))
                                                 <span class="invalid-feedback" role="alert">
@@ -98,7 +172,8 @@
                                         </div>
                                         <div class="col-md-6 form-group">
                                             <label for="">Fecha Nacimiento</label>
-                                            <input type="date" name="fecha_nacimiento" id="fecha_nacimiento" value="{{old('fecha_nacimiento')}}"
+                                            <input type="date" name="fecha_nacimiento" id="fecha_nacimiento"
+                                                value="{{ old('fecha_nacimiento') }}"
                                                 class="form-control {{ $errors->has('fecha_nacimiento') ? 'is-invalid' : '' }}" />
                                             @if ($errors->has('fecha_nacimiento'))
                                                 <span class="invalid-feedback" role="alert">
@@ -158,7 +233,7 @@
                                     <div class="row">
                                         <div class="form-group col-md-12">
                                             <label for="">Email</label>
-                                            <input type="email" name="email" id="email" value="{{old('email')}}"
+                                            <input type="email" name="email" id="email" value="{{ old('email') }}"
                                                 class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}">
                                             @if ($errors->has('email'))
                                                 <span class="invalid-feedback" role="alert">
@@ -168,7 +243,8 @@
                                         </div>
                                         <div class="col-md-6">
                                             <label for="">Password</label>
-                                            <input type="password" name="password" id="password" value="{{old('password')}}"
+                                            <input type="password" name="password" id="password"
+                                                value="{{ old('password') }}"
                                                 class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}">
                                             @if ($errors->has('password'))
                                                 <span class="invalid-feedback" role="alert">
@@ -178,7 +254,8 @@
                                         </div>
                                         <div class="col-md-6">
                                             <label for="">Confirm Password</label>
-                                            <input type="password" name="confirm_password" id="confirm_password" value="{{old('confirm_password')}}"
+                                            <input type="password" name="confirm_password" id="confirm_password"
+                                                value="{{ old('confirm_password') }}"
                                                 class="form-control {{ $errors->has('confirm_password') ? 'is-invalid' : '' }}">
                                             @if ($errors->has('confirm_password'))
                                                 <span class="invalid-feedback" role="alert">
@@ -253,12 +330,15 @@
 <link href="{{ asset('Inspinia/css/plugins/select2/select2.min.css') }}" rel="stylesheet">
 <link href="{{ asset('Inspinia/css/plugins/steps/jquery.steps.css') }}" rel="stylesheet">
 <style>
-
+    .swal-icon--custom{
+        width:250px;
+        height: auto;
+    }
 </style>
 @endsection
 @section('script-custom')
 <script src="{{ asset('Inspinia/js/plugins/steps/jquery.steps.min.js') }}"></script>
 <script src="{{ asset('Inspinia/js/plugins/select2/select2.full.min.js') }}"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="{{ asset('js/Administracion/Empleado/create.js') }}"></script>
 @endsection

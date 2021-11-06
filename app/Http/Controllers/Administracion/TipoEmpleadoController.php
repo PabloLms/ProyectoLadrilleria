@@ -18,7 +18,7 @@ class TipoEmpleadoController extends Controller
     }
     public function getList()
     {
-        return DataTables::of(TipoEmpleado::where('estado','ACTIVO')->get())->toJson();
+        return DataTables::of(TipoEmpleado::where('estado', 'ACTIVO')->get())->toJson();
     }
     public function store(Request $request)
     {
@@ -26,42 +26,45 @@ class TipoEmpleadoController extends Controller
             DB::beginTransaction();
             TipoEmpleado::create($request->all());
             DB::commit();
-            return array("success"=>true,"mensaje"=>"Registro con Exito");
-        }
-        catch(Exception $e) {
+            return array("success" => true, "mensaje" => "Registro con Exito");
+        } catch (Exception $e) {
             Log::info($e->getMessage());
             DB::rollBack();
-            return array("success"=>false,"mensaje"=>$e->getMessage());
+            return array("success" => false, "mensaje" => $e->getMessage());
         }
-
     }
-    public function update(Request $request,$id){
+    public function update(Request $request, $id)
+    {
+        DB::beginTransaction();
         try {
-            DB::beginTransaction();
             TipoEmpleado::findOrFail($id)->update(
                 $request->all()
             );
             DB::commit();
-            return array("success"=>true,"mensaje"=>"Actualizado con Exito");
-        }
-        catch(Exception $e) {
+            return array("success" => true, "mensaje" => "Actualizado con Exito");
+        } catch (Exception $e) {
             DB::rollBack();
-            return array("success"=>false,"mensaje"=>$e->getMessage());
+            return array("success" => false, "mensaje" => $e->getMessage());
         }
     }
-    public function destroy($id){
+    public function destroy($id)
+    {
+        DB::beginTransaction();
         try {
-            DB::beginTransaction();
             TipoEmpleado::findOrFail($id)->update([
-                "estado"=>"ANULADO"
+                "estado" => "ANULADO"
             ]);
             DB::commit();
-            return array("success"=>true,"mensaje"=>"Eliminado con Exito");
-        }
-        catch(Exception $e) {
+            return array("success" => true, "mensaje" => "Eliminado con Exito");
+        } catch (Exception $e) {
             DB::rollBack();
-            return array("success"=>false,"mensaje"=>$e->getMessage());
+            return array("success" => false, "mensaje" => $e->getMessage());
         }
     }
-
+    public function verify()
+    {
+        return TipoEmpleado::where('estado', 'ACTIVO')->count() == 0
+            ? array("success" => false, "mensaje" => "no se ha registrado ningun tipo empleado")
+            : array("success" => true, "mensaje" => "Si hay registro de tipo empleado");
+    }
 }

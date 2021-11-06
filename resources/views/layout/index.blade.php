@@ -10,7 +10,7 @@
     @yield('css-vue')
     <link href="{{ asset('Inspinia/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('Inspinia/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
-    <link href="{{ asset('Inspinia/css/plugins/sweetalert/sweetalert.css') }}" rel="stylesheet">
+    {{-- <link href="{{ asset('Inspinia/css/plugins/sweetalert/sweetalert.css') }}" rel="stylesheet"> --}}
     @yield('css-midle')
     <link href="{{ asset('Inspinia/css/animate.css') }}" rel="stylesheet">
     <link href="{{ asset('Inspinia/css/style.css') }}" rel="stylesheet">
@@ -83,7 +83,7 @@
     <script src="{{ asset('Inspinia/js/plugins/pace/pace.min.js') }}"></script>
     <script src="{{ asset('Inspinia/js/plugins/toastr/toastr.min.js') }}"></script>
     <script src="{{ asset('Inspinia/js/scripts.js') }}"></script>
-    <script src="{{ asset('Inspinia/js/plugins/sweetalert/sweetalert.min.js') }}"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     @yield('script-custom')
 </body>
 

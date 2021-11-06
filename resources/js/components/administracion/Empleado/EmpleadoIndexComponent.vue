@@ -53,9 +53,16 @@ export default {
         return {};
     },
     methods:{
-        storeEmpleado: function()
+        storeEmpleado: async function()
         {
-            window.location.href=route('empleado.create')
+            var result=await this.$helperJs.verificarExistenciaTipoEmpleado()
+            if(result.data.success)
+            {
+                window.location.href=route('empleado.create');
+            }
+            else{
+                toastr.error(result.data.mensaje,"Error");
+            }
         }
     }
 };

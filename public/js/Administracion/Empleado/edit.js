@@ -6,7 +6,7 @@ $(document).ready(function () {
         width: "100%",
     });
     verificarTipoDocumento();
-    getProvincias();
+    // getProvincias();
 
 });
 $("#form").steps({
