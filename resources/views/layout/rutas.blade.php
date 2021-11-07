@@ -30,60 +30,64 @@
                         class="fa fa-building" aria-hidden="true"></i>Tipos de Empleados</a></li>
         </ul>
         <ul class="nav nav-second-level collapse">
-            <li class="@yield('empleado-active')"><a href="{{ route('empleado.index') }}"><i
-                        class="fa fa-users" aria-hidden="true"></i>Empleados</a></li>
+            <li class="@yield('empleado-active')"><a href="{{ route('empleado.index') }}"><i class="fa fa-users"
+                        aria-hidden="true"></i>Empleados</a></li>
         </ul>
         <ul class="nav nav-second-level collapse">
-            <li class="@yield('proveedor-active')"><a href="#"><i
-                        class="fa fa-users" aria-hidden="true"></i>Proveedores</a></li>
+            <li class="@yield('proveedor-active')"><a href="{{ route('proveedor.index') }}"><i class="fa fa-users"
+                        aria-hidden="true"></i>Proveedores</a></li>
         </ul>
         <ul class="nav nav-second-level collapse">
-            <li class="@yield('cliente-active')"><a href="{{ route('cliente.index') }}"><i
-                        class="fa fa-users" aria-hidden="true"></i>Clientes</a></li>
+            <li class="@yield('cliente-active')"><a href="{{ route('cliente.index') }}"><i class="fa fa-users"
+                        aria-hidden="true"></i>Clientes</a></li>
         </ul>
         <ul class="nav nav-second-level collapse">
-            <li class="@yield('api-active')"><a href="{{route('api.index')}}"><i
-                        class="fa fa-paper-plane" aria-hidden="true"></i>Apis</a></li>
+            <li class="@yield('api-active')"><a href="{{ route('api.index') }}"><i class="fa fa-paper-plane"
+                        aria-hidden="true"></i>Apis</a></li>
         </ul>
     </li>
     <li class="@yield('compra-active')">
         <a href="#"><i class="fa fa-cart-plus"></i> <span class="nav-label">Compras</span><span
                 class="fa arrow"></span></a>
         <ul class="nav nav-second-level collapse">
-            <li class="@yield('insumo-active')"><a href="#"><i
-                        class="fa fa-book" aria-hidden="true"></i>Insumos</a></li>
+            <li class="@yield('insumo-active')"><a href="#"><i class="fa fa-book" aria-hidden="true"></i>Insumos</a>
+            </li>
         </ul>
         <ul class="nav nav-second-level collapse">
-            <li class="@yield('docCompra-active')"><a href="#"><i
-                        class="fa fa-cart-plus" aria-hidden="true"></i>Doc Compra</a></li>
+            <li class="@yield('docCompra-active')"><a href="#"><i class="fa fa-cart-plus" aria-hidden="true"></i>Doc
+                    Compra</a></li>
         </ul>
     </li>
     <li class="@yield('compras-active')">
         <a href="#"><i class="fa fa-cart-plus"></i> <span class="nav-label">Ventas</span><span
                 class="fa arrow"></span></a>
         <ul class="nav nav-second-level collapse">
-            <li class="@yield('tipoProducto-active')"><a href="#"><i
-                        class="fa fa-book" aria-hidden="true"></i>Tipos de Productos</a></li>
+            <li class="@yield('tipoProducto-active')"><a href="#"><i class="fa fa-book" aria-hidden="true"></i>Tipos
+                    de Productos</a></li>
         </ul>
         <ul class="nav nav-second-level collapse">
-            <li class="@yield('producto-active')"><a href="#"><i
-                        class="fa fa-cart-plus" aria-hidden="true"></i>Productos</a></li>
+            <li class="@yield('producto-active')"><a href="#"><i class="fa fa-cart-plus"
+                        aria-hidden="true"></i>Productos</a></li>
         </ul>
         <ul class="nav nav-second-level collapse">
-            <li class="@yield('docVenta-active')"><a href="#"><i
-                        class="fa fa-book" aria-hidden="true"></i>Doc Ventas</a></li>
+            <li class="@yield('docVenta-active')"><a href="#"><i class="fa fa-book" aria-hidden="true"></i>Doc
+                    Ventas</a></li>
         </ul>
     </li>
     <li class="@yield('mantenimiento-active')">
         <a href="#"><i class="fa fa-list"></i> <span class="nav-label">Mantenimiento</span><span
                 class="fa arrow"></span></a>
         <ul class="nav nav-second-level collapse">
-            <li class="@yield('empresa-active')"><a href="#"><i
-                        class="fa fa-building" aria-hidden="true"></i>Datos de la Empresa</a></li>
+            <li class="@yield('empresa-active')"><a href="#"><i class="fa fa-building" aria-hidden="true"></i>Datos de
+                    la Empresa</a></li>
         </ul>
         <ul class="nav nav-second-level collapse">
-            <li class="@yield('almacen-active')"><a href="#"><i
-                        class="fa fa-archive" aria-hidden="true"></i>Almacen</a></li>
+            <li class="@yield('unidadMedida-active')"><a href="{{ route('unidadMedida.index') }}"><i
+                        class="fa fa-building" aria-hidden="true"></i>Unidad de Medida</a></li>
+        </ul>
+        <ul class="nav nav-second-level collapse">
+            <li class="@yield('almacen-active')"><a href="#"><i class="fa fa-archive"
+                        aria-hidden="true"></i>Almacen</a></li>
         </ul>
     </li>
 </ul>

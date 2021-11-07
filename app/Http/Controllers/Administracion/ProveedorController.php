@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\Administracion;
 
 use App\Http\Controllers\Controller;
-use App\Models\Administracion\Cliente;
 use App\Models\Administracion\Persona;
 use App\Models\Administracion\PersonaDni;
 use App\Models\Administracion\PersonaRuc;
-use App\Models\User;
+use App\Models\Administracion\Proveedor;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -16,32 +15,32 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Yajra\DataTables\Facades\DataTables;
 
-class ClienteController extends Controller
+class ProveedorController extends Controller
 {
     public function index()
     {
-        return view('administracion.cliente.index');
+        return view('administracion.proveedor.index');
     }
     public function getList()
     {
-        $clientes = DB::table('cliente as e')
+        $proveedores = DB::table('proveedor as e')
             ->join('persona as p', 'p.id', '=', 'e.persona_id')
             ->select('e.id')
             ->where('p.estado', 'ACTIVO')->get()->map(function ($value) {
-                $cliente=Cliente::findOrFail($value->id);
+                $proveedor=Proveedor::findOrFail($value->id);
                 return array(
-                    "id" => $cliente->id,
-                    "nombre" => $cliente->persona->personaDni ? $cliente->persona->personaDni->nombres_apellidos() : $cliente->persona->personaRuc->nombre_comercial,
-                    "documento" => $cliente->persona->personaDni ? $cliente->persona->personaDni->dni : $cliente->persona->personaRuc->ruc,
-                    "direccion" => $cliente->persona->direccion,
-                    "telefono" => $cliente->persona->telefono,
+                    "id" => $proveedor->id,
+                    "nombre" => $proveedor->persona->personaDni ? $proveedor->persona->personaDni->nombres_apellidos() : $proveedor->persona->personaRuc->nombre_comercial,
+                    "documento" => $proveedor->persona->personaDni ? $proveedor->persona->personaDni->dni : $proveedor->persona->personaRuc->ruc,
+                    "direccion" => $proveedor->persona->direccion,
+                    "telefono" => $proveedor->persona->telefono,
                 );
             });
-        return DataTables::of($clientes)->toJson();
+        return DataTables::of($proveedores)->toJson();
     }
     public function create()
     {
-        return view('administracion.cliente.create');
+        return view('administracion.proveedor.create');
     }
     public function store(Request $request)
     {
@@ -126,30 +125,30 @@ class ClienteController extends Controller
                 $persona_ruc->persona_id = $persona->id;
                 $persona_ruc->save();
             }
-            $cliente = new Cliente();
-            $cliente->persona_id = $persona->id;
-            // if ($request->hasFile('logo')) {
-            //     $file = $request->file('logo');
-            //     $name = $file->getClientOriginalName();
-            //     $cliente->nombre_imagen = $name;
-            //     $cliente->url_imagen = $request->file('logo')->store('public/clientes');
-            // }
-            $cliente->save();
+            $proveedor = new Proveedor();
+            $proveedor->persona_id = $persona->id;
+            if ($request->hasFile('logo')) {
+                $file = $request->file('logo');
+                $name = $file->getClientOriginalName();
+                $proveedor->nombre_imagen = $name;
+                $proveedor->url_imagen = $request->file('logo')->store('public/proveedores');
+            }
+            $proveedor->save();
             DB::commit();
         } catch (Exception $e) {
             DB::rollback();
             Log::info($e->getMessage());
         }
-        return redirect()->route('cliente.index');
+        return redirect()->route('proveedor.index');
     }
     public function edit($id)
     {
-        $cliente = Cliente::findOrFail($id);
-        return view('administracion.cliente.edit', ["cliente" => $cliente]);
+        $proveedor = Proveedor::findOrFail($id);
+        return view('administracion.proveedor.edit', ["proveedor" => $proveedor]);
     }
     public function update(Request $request, $id)
     {
-        $cliente = Cliente::findOrFail($id);
+        $proveedor = Proveedor::findOrFail($id);
         $data = $request->all();
         $rules = [
             'telefono' => ['required', 'numeric'],
@@ -186,7 +185,7 @@ class ClienteController extends Controller
         if ($request->tipo_documento == "DNI") {
             $rules += array("nombres" => "required");
             $rules += array("apellidos" => "required");
-            $rules += array("numero_documento" => ['required',Rule::unique('persona_dni', 'dni')->ignore($cliente->persona->personaDni->id)]);
+            $rules += array("numero_documento" => ['required',Rule::unique('persona_dni', 'dni')->ignore($proveedor->persona->personaDni->id)]);
 
 
             $message += array("nombres.required" => "El Campo nombre es Obligatorio");
@@ -196,7 +195,7 @@ class ClienteController extends Controller
         } else {
             $rules += array("nombre_comercial" => "required");
             $rules += array("razon_social" => "required");
-            $rules += array("numero_documento" => ['required',Rule::unique('persona_ruc', 'ruc')->ignore($cliente->persona->personaRuc->id)]);
+            $rules += array("numero_documento" => ['required',Rule::unique('persona_ruc', 'ruc')->ignore($proveedor->persona->personaRuc->id)]);
 
             $message += array("nombre_comercial.required" => "El Campo nombre comercial es Obligatorio");
             $message += array("razon_social.required" => "El Campo razon social es Obligatorio");
@@ -206,7 +205,7 @@ class ClienteController extends Controller
         Validator::make($data, $rules, $message)->validate();
         DB::beginTransaction();
         try {
-            $persona = $cliente->persona;
+            $persona = $proveedor->persona;
             $persona->direccion = $request->direccion;
             $persona->telefono = $request->telefono;
             $persona->fecha_nacimiento = $request->fecha_nacimiento;
@@ -228,30 +227,30 @@ class ClienteController extends Controller
                 $persona_ruc->save();
             }
             if ($request->get('password')) {
-                $usuario = $cliente->user;
+                $usuario = $proveedor->user;
                 $usuario->password = bcrypt($request->password);
                 $usuario->save();
             }
-            // if ($request->hasFile('logo')) {
-            //     $file = $request->file('logo');
-            //     $name = $file->getClientOriginalName();
-            //     $cliente->nombre_imagen = $name;
-            //     $cliente->url_imagen = $request->file('logo')->store('public/clientes');
-            //     $cliente->save();
-            // }
+            if ($request->hasFile('logo')) {
+                $file = $request->file('logo');
+                $name = $file->getClientOriginalName();
+                $proveedor->nombre_imagen = $name;
+                $proveedor->url_imagen = $request->file('logo')->store('public/proveedores');
+                $proveedor->save();
+            }
 
             DB::commit();
         } catch (Exception $e) {
             DB::rollback();
             Log::info($e->getMessage());
         }
-        return redirect()->route('cliente.index');
+        return redirect()->route('proveedor.index');
     }
     public function destroy($id)
     {
         DB::beginTransaction();
         try {
-            Cliente::findOrFail($id)->persona->update([
+            Proveedor::findOrFail($id)->persona->update([
                 "estado" => "ANULADO"
             ]);
             DB::commit();

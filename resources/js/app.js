@@ -35,6 +35,11 @@ Vue.component(
         .default
 );
 Vue.component(
+    "unidadmedidaindex-component",
+    require("./components/mantenimiento/UnidadMedida/UnidadMedidaIndexComponent.vue")
+        .default
+);
+Vue.component(
     "empleado-index-component",
     require("./components/administracion/Empleado/EmpleadoIndexComponent.vue")
         .default
@@ -52,6 +57,11 @@ Vue.component(
 Vue.component(
     "cliente-index-component",
     require("./components/administracion/Cliente/ClienteIndexComponent.vue")
+        .default
+);
+Vue.component(
+    "proveedor-index-component",
+    require("./components/administracion/Proveedor/ProveedorIndexComponent.vue")
         .default
 );
 //Datatable
@@ -73,6 +83,14 @@ Vue.component(
 Vue.component(
     "datatablecliente-component",
     require("./components/datatables/Cliente/DatatableClienteComponent.vue")
+)
+Vue.component(
+    "datatableproveedor-component",
+    require("./components/datatables/Proveedor/DatatableProveedorComponent.vue")
+)
+Vue.component(
+    "datatableunidadmedida-component",
+    require("./components/datatables/UnidadMedida/DatatableUnidadMedidaComponent.vue")
 )
 /**
  * Next, we will create a fresh Vue application instance and attach it to
