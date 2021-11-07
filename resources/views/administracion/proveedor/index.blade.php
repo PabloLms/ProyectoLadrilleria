@@ -1,7 +1,7 @@
 @extends('layout.index')
 @section('contenido')
 @section('administracion-active', 'active')
-@section('cliente-active', 'active')
+@section('proveedor-active', 'active')
 <div id="app">
     <proveedor-index-component>
     </proveedor-index-component>
