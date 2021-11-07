@@ -6,6 +6,7 @@ use App\Http\Controllers\Administracion\ProveedorController;
 use App\Http\Controllers\Administracion\TipoEmpleadoController;
 use App\Http\Controllers\ApisController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Mantenimiento\EmpresaPersonalController;
 use App\Http\Controllers\Mantenimiento\UnidadMedidaController;
 use App\Http\Controllers\Ubigeo\UbigeoController;
 use Illuminate\Support\Facades\Auth;
@@ -90,4 +91,10 @@ Route::prefix('unidadMedida')->middleware('auth')->group(function(){
 Route::prefix('ubigeo')->middleware('auth')->group(function(){
     Route::get('getprovincias/{departamentoid}',[UbigeoController::class,'getProvincias'])->name('ubigeo.getProvincias');
     Route::get('getdistritos/{provinciaid}',[UbigeoController::class,'getDistritos'])->name('ubigeo.getDistritos');
+});
+Route::prefix('empresaPersonal')->group(function () {
+    Route::get('/index', [EmpresaPersonalController::class, 'index'])->name('EmpresaPersonal.index');
+    Route::get('/empresaPersonal', [EmpresaPersonalController::class, 'getEmpresaPersonal'])->name('EmpresaPersonal.empresaPersonal');
+    Route::post('/store', [EmpresaPersonalController::class, 'store'])->name('EmpresaPersonal.store');
+    Route::get('/verify', [EmpresaPersonalController::class, 'verify'])->name('EmpresaPersonal.verify');
 });

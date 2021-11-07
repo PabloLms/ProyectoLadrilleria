@@ -35,6 +35,11 @@ Vue.component(
         .default
 );
 Vue.component(
+    "empresapersonalindex-component",
+    require("./components/mantenimiento/EmpresaPersonal/EmpresaPersonalIndexComponent.vue")
+        .default
+);
+Vue.component(
     "unidadmedidaindex-component",
     require("./components/mantenimiento/UnidadMedida/UnidadMedidaIndexComponent.vue")
         .default

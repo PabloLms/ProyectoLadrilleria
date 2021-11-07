@@ -78,7 +78,8 @@
         <a href="#"><i class="fa fa-list"></i> <span class="nav-label">Mantenimiento</span><span
                 class="fa arrow"></span></a>
         <ul class="nav nav-second-level collapse">
-            <li class="@yield('empresa-active')"><a href="#"><i class="fa fa-building" aria-hidden="true"></i>Datos de
+            <li class="@yield('empresa-active')"><a href="{{ route('EmpresaPersonal.index') }}"><i
+                        class="fa fa-building" aria-hidden="true"></i>Datos de
                     la Empresa</a></li>
         </ul>
         <ul class="nav nav-second-level collapse">

@@ -1,7 +1,7 @@
 @extends('layout.index')
 @section('contenido')
-@section('administracion-active', 'active')
-@section('unudadMedida-active', 'active')
+@section('mantenimiento-active', 'active')
+@section('unidadMedida-active', 'active')
 <div id="app">
     <unidadmedidaindex-component>
 
