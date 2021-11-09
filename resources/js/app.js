@@ -69,6 +69,11 @@ Vue.component(
     require("./components/administracion/Proveedor/ProveedorIndexComponent.vue")
         .default
 );
+Vue.component(
+    "almacenindex-component",
+    require("./components/mantenimiento/Almacen/AlmacenIndexComponent.vue")
+        .default
+);
 //Datatable
 
 Vue.component(
@@ -96,6 +101,10 @@ Vue.component(
 Vue.component(
     "datatableunidadmedida-component",
     require("./components/datatables/UnidadMedida/DatatableUnidadMedidaComponent.vue")
+)
+Vue.component(
+    "datatablealmacen-component",
+    require("./components/datatables/Almacen/DatatableAlmacenComponent.vue")
 )
 /**
  * Next, we will create a fresh Vue application instance and attach it to

@@ -87,7 +87,7 @@
                         class="fa fa-building" aria-hidden="true"></i>Unidad de Medida</a></li>
         </ul>
         <ul class="nav nav-second-level collapse">
-            <li class="@yield('almacen-active')"><a href="#"><i class="fa fa-archive"
+            <li class="@yield('almacen-active')"><a href="{{route('almacen.index')}}"><i class="fa fa-archive"
                         aria-hidden="true"></i>Almacen</a></li>
         </ul>
     </li>

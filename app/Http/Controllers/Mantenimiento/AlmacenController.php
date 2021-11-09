@@ -3,28 +3,27 @@
 namespace App\Http\Controllers\Mantenimiento;
 
 use App\Http\Controllers\Controller;
-use App\Models\Mantenimiento\UnidadMedida;
+use App\Models\Mantenimiento\Almacen;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Facades\DataTables;
 
-class UnidadMedidaController extends Controller
+class AlmacenController extends Controller
 {
     public function index()
     {
-        return view('mantenimiento.unidadMedida.index');
+        return view('mantenimiento.almacen.index');
     }
     public function getList()
     {
-        return DataTables::of(UnidadMedida::where('estado', 'ACTIVO')->get())->toJson();
+        return DataTables::of(Almacen::where('estado', 'ACTIVO')->get())->toJson();
     }
     public function store(Request $request)
     {
         DB::beginTransaction();
         try {
-            UnidadMedida::create($request->all());
+            Almacen::create($request->all());
             DB::commit();
             return array("success" => true, "mensaje" => "Registro con Exito");
         } catch (Exception $e) {
@@ -36,7 +35,7 @@ class UnidadMedidaController extends Controller
     {
         DB::beginTransaction();
         try {
-            UnidadMedida::findOrFail($id)->update(
+            Almacen::findOrFail($id)->update(
                 $request->all()
             );
             DB::commit();
@@ -50,7 +49,7 @@ class UnidadMedidaController extends Controller
     {
         DB::beginTransaction();
         try {
-            UnidadMedida::findOrFail($id)->update([
+            Almacen::findOrFail($id)->update([
                 "estado" => "ANULADO"
             ]);
             DB::commit();

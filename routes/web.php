@@ -6,6 +6,7 @@ use App\Http\Controllers\Administracion\ProveedorController;
 use App\Http\Controllers\Administracion\TipoEmpleadoController;
 use App\Http\Controllers\ApisController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Mantenimiento\AlmacenController;
 use App\Http\Controllers\Mantenimiento\EmpresaPersonalController;
 use App\Http\Controllers\Mantenimiento\UnidadMedidaController;
 use App\Http\Controllers\Ubigeo\UbigeoController;
@@ -86,7 +87,13 @@ Route::prefix('unidadMedida')->middleware('auth')->group(function(){
     Route::post('/update/{id}',[UnidadMedidaController::class, 'update'])->name('unidadMedida.update');
     Route::post('/destroy/{id}',[UnidadMedidaController::class, 'destroy'])->name('unidadMedida.destroy');
     Route::get('/getList',[UnidadMedidaController::class,'getList'])->name('unidadMedida.getList');
-    Route::get('/verify',[UnidadMedidaController::class,'verify'])->name('unidadMedida.verify');
+});
+Route::prefix('almacen')->middleware('auth')->group(function(){
+    Route::get('/', [AlmacenController::class, 'index'])->name('almacen.index');
+    Route::post('/store',[AlmacenController::class, 'store'])->name('almacen.store');
+    Route::post('/update/{id}',[AlmacenController::class, 'update'])->name('almacen.update');
+    Route::post('/destroy/{id}',[AlmacenController::class, 'destroy'])->name('almacen.destroy');
+    Route::get('/getList',[AlmacenController::class,'getList'])->name('almacen.getList');
 });
 Route::prefix('ubigeo')->middleware('auth')->group(function(){
     Route::get('getprovincias/{departamentoid}',[UbigeoController::class,'getProvincias'])->name('ubigeo.getProvincias');
