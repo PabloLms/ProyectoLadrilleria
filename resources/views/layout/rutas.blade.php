@@ -58,11 +58,11 @@
                     Compra</a></li>
         </ul>
     </li>
-    <li class="@yield('compras-active')">
+    <li class="@yield('ventas-active')">
         <a href="#"><i class="fa fa-cart-plus"></i> <span class="nav-label">Ventas</span><span
                 class="fa arrow"></span></a>
         <ul class="nav nav-second-level collapse">
-            <li class="@yield('tipoProducto-active')"><a href="#"><i class="fa fa-book" aria-hidden="true"></i>Tipos
+            <li class="@yield('tipoProducto-active')"><a href="{{ route('tipoProducto.index') }}"><i class="fa fa-book" aria-hidden="true"></i>Tipos
                     de Productos</a></li>
         </ul>
         <ul class="nav nav-second-level collapse">

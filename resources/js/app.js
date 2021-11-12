@@ -35,6 +35,11 @@ Vue.component(
         .default
 );
 Vue.component(
+    "tipoproductoindex-component",
+    require("./components/ventas/tipoProducto/TipoProductoIndexComponent.vue")
+        .default
+);
+Vue.component(
     "empresapersonalindex-component",
     require("./components/mantenimiento/EmpresaPersonal/EmpresaPersonalIndexComponent.vue")
         .default
@@ -79,6 +84,11 @@ Vue.component(
 Vue.component(
     "datatabletipoempleado-component",
     require("./components/datatables/tipoEmpleado/DatatableTipoEmpleadoComponent.vue")
+        .default
+);
+Vue.component(
+    "datatabletipoproducto-component",
+    require("./components/datatables/TipoProducto/DatatableTipoProductoComponent.vue")
         .default
 );
 Vue.component(

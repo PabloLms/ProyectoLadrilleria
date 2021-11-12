@@ -4090,6 +4090,241 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/datatables/TipoProducto/DatatableTipoProductoComponent.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/datatables/TipoProducto/DatatableTipoProductoComponent.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var datatables_net_bs4__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! datatables.net-bs4 */ "./node_modules/datatables.net-bs4/js/dataTables.bootstrap4.js");
+/* harmony import */ var datatables_net_bs4__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(datatables_net_bs4__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var datatables_net_buttons_bs4__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! datatables.net-buttons-bs4 */ "./node_modules/datatables.net-buttons-bs4/js/buttons.bootstrap4.js");
+/* harmony import */ var datatables_net_buttons_bs4__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(datatables_net_buttons_bs4__WEBPACK_IMPORTED_MODULE_1__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+ // require( 'jszip' );
+// require( 'pdfmake' );
+// require( 'datatables.net-bs4' )();
+// require( 'datatables.net-buttons-bs4' )();
+// require( 'datatables.net-buttons/js/buttons.colVis.js' )();
+// require( 'datatables.net-buttons/js/buttons.html5.js' )();
+// require( 'datatables.net-buttons/js/buttons.print.js' )();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      tipo: "",
+      id: "",
+      errores: {
+        tipo: {
+          error: false,
+          mensaje: ""
+        }
+      },
+      table: null
+    };
+  },
+  mounted: function mounted() {
+    var $this = this;
+    this.datosInicializado();
+    $(document).on("click", ".btn-delete", function (e) {
+      var datos = $this.table.row($(this).closest("tr")).data();
+      $this.id = datos.id;
+      swal({
+        title: "Estas seguro?",
+        text: "Eliminar Registro!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true
+      }).then(function (willDelete) {
+        if (willDelete) {
+          axios.post(route("tipoProducto.destroy", $this.id)).then(function (value) {
+            if (value.data.success) {
+              $this.table.ajax.reload();
+            } else {
+              console.log(value.data.mensaje);
+              toastr.error("Ocurrio un Error", "Error");
+            }
+          })["catch"](function (value) {
+            toastr.error(value);
+          });
+        } else {
+          swal("Cancelado", "No se ha eliminado", "error");
+        }
+      });
+    });
+    $(document).on("click", ".btn-edit", function (e) {
+      var datos = $this.table.row($(this).closest("tr")).data();
+      $this.tipo = datos.tipo;
+      $this.descripcion = datos.descripcion;
+      $this.id = datos.id;
+      $this.showModalEdit();
+    });
+  },
+  methods: {
+    showModalEdit: function showModalEdit() {
+      this.limpiarErrores();
+      $("#modalEdit").modal("show");
+    },
+    datosInicializado: function datosInicializado() {
+      this.table = $("#tableParqueos").DataTable({
+        bPaginate: true,
+        bLengthChange: true,
+        bFilter: true,
+        bInfo: true,
+        bAutoWidth: false,
+        processing: true,
+        ajax: route("tipoProducto.getList"),
+        language: {
+          url: window.location.origin + "/Spanish.json" // '//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json'
+
+        },
+        columns: [{
+          data: "id",
+          className: "text-center"
+        }, {
+          data: "tipo",
+          className: "text-left"
+        }, {
+          data: null,
+          className: "text-center",
+          render: function render(data) {
+            return "<div class='btn-group' style='text-transform:capitalize;'><button data-toggle='dropdown' class='btn btn-danger  btn-sm  dropdown-toggle'><i class='fa fa-bars'></i></button><ul class='dropdown-menu'>" + "<li><a class='dropdown-item btn-edit' href='#' title='Modificar' ><b><i class='fa fa-edit'></i>Editar</a></b></li>" + "<li><a class='dropdown-item btn-delete'  title='Eliminar'><b><i class='fa fa-trash'></i> Eliminar</a></b></li>" + "</ul></div>"; // return '<div class="dropdown"><button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown button</button><div class="dropdown-menu" aria-labelledby="dropdownMenuButton"><a class="dropdown-item" href="#">Action</a><a class="dropdown-item" href="#">Another action</a><a class="dropdown-item" href="#">Something else here</a></div></div>';
+          }
+        }]
+      });
+    },
+    editTipoProducto: function editTipoProducto() {
+      var $this = this;
+      this.limpiarErrores();
+
+      if (this.validaciones()) {
+        var formdata = new FormData();
+        formdata.append("tipo", this.tipo);
+        axios.post(route("tipoProducto.update", $this.id), formdata).then(function (value) {
+          if (value.data.success) {
+            $this.table.ajax.reload();
+            $("#modalEdit").modal("hide");
+          } else {
+            console.log(value.data.mensaje);
+            toastr.error("Ocurrio un Error", "Error");
+          }
+        })["catch"](function (value) {
+          toastr.error(value);
+        });
+      }
+    },
+    recargar: function recargar() {
+      this.table.ajax.reload();
+    },
+    validaciones: function validaciones() {
+      var $this = this;
+      var resultado = true;
+
+      if (this.tipo.length == 0) {
+        this.errores.tipo.error = true;
+        this.errores.tipo.mensaje = "Falta ingresar tipo";
+        resultado = false;
+      }
+
+      return !resultado ? false : true;
+    },
+    limpiarErrores: function limpiarErrores() {
+      this.errores = {
+        tipo: {
+          error: false,
+          mensaje: ""
+        }
+      };
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/datatables/UnidadMedida/DatatableUnidadMedidaComponent.vue?vue&type=script&lang=js&":
 /*!*************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/datatables/UnidadMedida/DatatableUnidadMedidaComponent.vue?vue&type=script&lang=js& ***!
@@ -5463,6 +5698,199 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ventas/tipoProducto/TipoProductoIndexComponent.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ventas/tipoProducto/TipoProductoIndexComponent.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _datatables_TipoProducto_DatatableTipoProductoComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../datatables/TipoProducto/DatatableTipoProductoComponent.vue */ "./resources/js/components/datatables/TipoProducto/DatatableTipoProductoComponent.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  components: {
+    DatatableTipoProductoComponent: _datatables_TipoProducto_DatatableTipoProductoComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      tipo: "",
+      errores: {
+        tipo: {
+          error: false,
+          mensaje: ""
+        }
+      }
+    };
+  },
+  mounted: function mounted() {},
+  methods: {
+    openModalStore: function openModalStore() {
+      this.limpiarErrores();
+      $("#modalCreate").modal("show");
+    },
+    storeTipoProducto: function storeTipoProducto() {
+      this.limpiarErrores();
+      var $this = this;
+
+      if (this.validaciones()) {
+        var formdata = new FormData();
+        formdata.append("tipo", this.tipo);
+        axios.post(route("tipoProducto.store"), formdata).then(function (value) {
+          if (value.data.success) {
+            $this.$refs.datatableTipoProducto.recargar();
+            $this.limpiarModalCreate();
+            $("#modalCreate").modal("hide");
+          } else {
+            console.log(value.data.mensaje);
+            toastr.error("Ocurrio un Error", "Error");
+          }
+        })["catch"](function (value) {
+          toastr.error(value);
+        });
+      }
+    },
+    validaciones: function validaciones() {
+      var $this = this;
+      var resultado = true;
+
+      if (this.tipo.length == 0) {
+        this.errores.tipo.error = true;
+        this.errores.tipo.mensaje = "Falta ingresar tipo";
+        resultado = false;
+      }
+
+      return !resultado ? false : true;
+    },
+    limpiarModalCreate: function limpiarModalCreate() {
+      this.tipo = "";
+      this.limpiarErrores();
+    },
+    limpiarErrores: function limpiarErrores() {
+      this.errores = {
+        tipo: {
+          error: false,
+          mensaje: ""
+        }
+      };
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -5504,6 +5932,7 @@ vue__WEBPACK_IMPORTED_MODULE_1__["default"].use(plugin); // const $ = require("j
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 vue__WEBPACK_IMPORTED_MODULE_1__["default"].component("tipoempleadoindex-component", __webpack_require__(/*! ./components/administracion/tipoEmpleado/TipoEmpleadoIndexComponent.vue */ "./resources/js/components/administracion/tipoEmpleado/TipoEmpleadoIndexComponent.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component("tipoproductoindex-component", __webpack_require__(/*! ./components/ventas/tipoProducto/TipoProductoIndexComponent.vue */ "./resources/js/components/ventas/tipoProducto/TipoProductoIndexComponent.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_1__["default"].component("empresapersonalindex-component", __webpack_require__(/*! ./components/mantenimiento/EmpresaPersonal/EmpresaPersonalIndexComponent.vue */ "./resources/js/components/mantenimiento/EmpresaPersonal/EmpresaPersonalIndexComponent.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_1__["default"].component("unidadmedidaindex-component", __webpack_require__(/*! ./components/mantenimiento/UnidadMedida/UnidadMedidaIndexComponent.vue */ "./resources/js/components/mantenimiento/UnidadMedida/UnidadMedidaIndexComponent.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_1__["default"].component("empleado-index-component", __webpack_require__(/*! ./components/administracion/Empleado/EmpleadoIndexComponent.vue */ "./resources/js/components/administracion/Empleado/EmpleadoIndexComponent.vue")["default"]);
@@ -5514,6 +5943,7 @@ vue__WEBPACK_IMPORTED_MODULE_1__["default"].component("proveedor-index-component
 vue__WEBPACK_IMPORTED_MODULE_1__["default"].component("almacenindex-component", __webpack_require__(/*! ./components/mantenimiento/Almacen/AlmacenIndexComponent.vue */ "./resources/js/components/mantenimiento/Almacen/AlmacenIndexComponent.vue")["default"]); //Datatable
 
 vue__WEBPACK_IMPORTED_MODULE_1__["default"].component("datatabletipoempleado-component", __webpack_require__(/*! ./components/datatables/tipoEmpleado/DatatableTipoEmpleadoComponent.vue */ "./resources/js/components/datatables/tipoEmpleado/DatatableTipoEmpleadoComponent.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component("datatabletipoproducto-component", __webpack_require__(/*! ./components/datatables/TipoProducto/DatatableTipoProductoComponent.vue */ "./resources/js/components/datatables/TipoProducto/DatatableTipoProductoComponent.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_1__["default"].component("datatableempleado-component", __webpack_require__(/*! ./components/datatables/Empleado/DatatableEmpleadoComponent.vue */ "./resources/js/components/datatables/Empleado/DatatableEmpleadoComponent.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_1__["default"].component("datatableapi-component", __webpack_require__(/*! ./components/datatables/Api/DatatableApiComponent.vue */ "./resources/js/components/datatables/Api/DatatableApiComponent.vue"));
 vue__WEBPACK_IMPORTED_MODULE_1__["default"].component("datatablecliente-component", __webpack_require__(/*! ./components/datatables/Cliente/DatatableClienteComponent.vue */ "./resources/js/components/datatables/Cliente/DatatableClienteComponent.vue"));
@@ -55722,6 +56152,45 @@ component.options.__file = "resources/js/components/datatables/Proveedor/Datatab
 
 /***/ }),
 
+/***/ "./resources/js/components/datatables/TipoProducto/DatatableTipoProductoComponent.vue":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/datatables/TipoProducto/DatatableTipoProductoComponent.vue ***!
+  \********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _DatatableTipoProductoComponent_vue_vue_type_template_id_24fa782a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DatatableTipoProductoComponent.vue?vue&type=template&id=24fa782a& */ "./resources/js/components/datatables/TipoProducto/DatatableTipoProductoComponent.vue?vue&type=template&id=24fa782a&");
+/* harmony import */ var _DatatableTipoProductoComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DatatableTipoProductoComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/datatables/TipoProducto/DatatableTipoProductoComponent.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _DatatableTipoProductoComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _DatatableTipoProductoComponent_vue_vue_type_template_id_24fa782a___WEBPACK_IMPORTED_MODULE_0__.render,
+  _DatatableTipoProductoComponent_vue_vue_type_template_id_24fa782a___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/datatables/TipoProducto/DatatableTipoProductoComponent.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/datatables/UnidadMedida/DatatableUnidadMedidaComponent.vue":
 /*!********************************************************************************************!*\
   !*** ./resources/js/components/datatables/UnidadMedida/DatatableUnidadMedidaComponent.vue ***!
@@ -55917,6 +56386,45 @@ component.options.__file = "resources/js/components/mantenimiento/UnidadMedida/U
 
 /***/ }),
 
+/***/ "./resources/js/components/ventas/tipoProducto/TipoProductoIndexComponent.vue":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/ventas/tipoProducto/TipoProductoIndexComponent.vue ***!
+  \************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _TipoProductoIndexComponent_vue_vue_type_template_id_ccce9fc6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TipoProductoIndexComponent.vue?vue&type=template&id=ccce9fc6& */ "./resources/js/components/ventas/tipoProducto/TipoProductoIndexComponent.vue?vue&type=template&id=ccce9fc6&");
+/* harmony import */ var _TipoProductoIndexComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TipoProductoIndexComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/ventas/tipoProducto/TipoProductoIndexComponent.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _TipoProductoIndexComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _TipoProductoIndexComponent_vue_vue_type_template_id_ccce9fc6___WEBPACK_IMPORTED_MODULE_0__.render,
+  _TipoProductoIndexComponent_vue_vue_type_template_id_ccce9fc6___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/ventas/tipoProducto/TipoProductoIndexComponent.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/administracion/Api/ApiIndexComponent.vue?vue&type=script&lang=js&":
 /*!***************************************************************************************************!*\
   !*** ./resources/js/components/administracion/Api/ApiIndexComponent.vue?vue&type=script&lang=js& ***!
@@ -56093,6 +56601,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/datatables/TipoProducto/DatatableTipoProductoComponent.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************!*\
+  !*** ./resources/js/components/datatables/TipoProducto/DatatableTipoProductoComponent.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DatatableTipoProductoComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DatatableTipoProductoComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/datatables/TipoProducto/DatatableTipoProductoComponent.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DatatableTipoProductoComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/datatables/UnidadMedida/DatatableUnidadMedidaComponent.vue?vue&type=script&lang=js&":
 /*!*********************************************************************************************************************!*\
   !*** ./resources/js/components/datatables/UnidadMedida/DatatableUnidadMedidaComponent.vue?vue&type=script&lang=js& ***!
@@ -56170,6 +56694,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UnidadMedidaIndexComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./UnidadMedidaIndexComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/mantenimiento/UnidadMedida/UnidadMedidaIndexComponent.vue?vue&type=script&lang=js&");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UnidadMedidaIndexComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/ventas/tipoProducto/TipoProductoIndexComponent.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************!*\
+  !*** ./resources/js/components/ventas/tipoProducto/TipoProductoIndexComponent.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TipoProductoIndexComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./TipoProductoIndexComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ventas/tipoProducto/TipoProductoIndexComponent.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TipoProductoIndexComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
@@ -56360,6 +56900,23 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/datatables/TipoProducto/DatatableTipoProductoComponent.vue?vue&type=template&id=24fa782a&":
+/*!***************************************************************************************************************************!*\
+  !*** ./resources/js/components/datatables/TipoProducto/DatatableTipoProductoComponent.vue?vue&type=template&id=24fa782a& ***!
+  \***************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DatatableTipoProductoComponent_vue_vue_type_template_id_24fa782a___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DatatableTipoProductoComponent_vue_vue_type_template_id_24fa782a___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DatatableTipoProductoComponent_vue_vue_type_template_id_24fa782a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DatatableTipoProductoComponent.vue?vue&type=template&id=24fa782a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/datatables/TipoProducto/DatatableTipoProductoComponent.vue?vue&type=template&id=24fa782a&");
+
+
+/***/ }),
+
 /***/ "./resources/js/components/datatables/UnidadMedida/DatatableUnidadMedidaComponent.vue?vue&type=template&id=73029db1&":
 /*!***************************************************************************************************************************!*\
   !*** ./resources/js/components/datatables/UnidadMedida/DatatableUnidadMedidaComponent.vue?vue&type=template&id=73029db1& ***!
@@ -56441,6 +56998,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UnidadMedidaIndexComponent_vue_vue_type_template_id_1e0fb0f6___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UnidadMedidaIndexComponent_vue_vue_type_template_id_1e0fb0f6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./UnidadMedidaIndexComponent.vue?vue&type=template&id=1e0fb0f6& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/mantenimiento/UnidadMedida/UnidadMedidaIndexComponent.vue?vue&type=template&id=1e0fb0f6&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/ventas/tipoProducto/TipoProductoIndexComponent.vue?vue&type=template&id=ccce9fc6&":
+/*!*******************************************************************************************************************!*\
+  !*** ./resources/js/components/ventas/tipoProducto/TipoProductoIndexComponent.vue?vue&type=template&id=ccce9fc6& ***!
+  \*******************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TipoProductoIndexComponent_vue_vue_type_template_id_ccce9fc6___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TipoProductoIndexComponent_vue_vue_type_template_id_ccce9fc6___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TipoProductoIndexComponent_vue_vue_type_template_id_ccce9fc6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./TipoProductoIndexComponent.vue?vue&type=template&id=ccce9fc6& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ventas/tipoProducto/TipoProductoIndexComponent.vue?vue&type=template&id=ccce9fc6&");
 
 
 /***/ }),
@@ -58176,6 +58750,178 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/datatables/TipoProducto/DatatableTipoProductoComponent.vue?vue&type=template&id=24fa782a&":
+/*!******************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/datatables/TipoProducto/DatatableTipoProductoComponent.vue?vue&type=template&id=24fa782a& ***!
+  \******************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "row" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "modalEdit",
+          tabindex: "-1",
+          "aria-labelledby": "exampleModalLabel",
+          "aria-hidden": "true",
+        },
+      },
+      [
+        _c("div", { staticClass: "modal-dialog" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _vm._m(1),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-body" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "" } }, [_vm._v("Tipo")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.tipo,
+                      expression: "tipo",
+                    },
+                  ],
+                  staticClass: "form-control form-control-sm",
+                  class: _vm.errores.tipo.error ? "is-invalid" : "",
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.tipo },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.tipo = $event.target.value
+                    },
+                  },
+                }),
+                _vm._v(" "),
+                _vm.errores.tipo.error
+                  ? _c(
+                      "span",
+                      {
+                        staticClass: "invalid-feedback",
+                        attrs: { role: "alert" },
+                      },
+                      [_c("strong", [_vm._v(_vm._s(_vm.errores.tipo.mensaje))])]
+                    )
+                  : _vm._e(),
+              ]),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-footer" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-secondary",
+                  attrs: { type: "button", "data-dismiss": "modal" },
+                },
+                [
+                  _vm._v(
+                    "\n                        Cerrar\n                    "
+                  ),
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  attrs: { type: "button" },
+                  on: { click: _vm.editTipoProducto },
+                },
+                [
+                  _vm._v(
+                    "\n                        Guardar\n                    "
+                  ),
+                ]
+              ),
+            ]),
+          ]),
+        ]),
+      ]
+    ),
+  ])
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-12" }, [
+      _c(
+        "table",
+        {
+          staticClass: "table table-striped table-bordered table-hover",
+          staticStyle: { width: "100%" },
+          attrs: { id: "tableParqueos" },
+        },
+        [
+          _c("thead", [
+            _c("tr", [
+              _c("th", [_vm._v("#")]),
+              _vm._v(" "),
+              _c("th", [_vm._v("Tipo")]),
+              _vm._v(" "),
+              _c("th", [_vm._v("Acciones")]),
+            ]),
+          ]),
+        ]
+      ),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
+        [
+          _vm._v(
+            "\n                        Editar un Tipo de Producto\n                    "
+          ),
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close",
+          },
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      ),
+    ])
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/datatables/UnidadMedida/DatatableUnidadMedidaComponent.vue?vue&type=template&id=73029db1&":
 /*!******************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/datatables/UnidadMedida/DatatableUnidadMedidaComponent.vue?vue&type=template&id=73029db1& ***!
@@ -59554,6 +60300,221 @@ var staticRenderFns = [
         [
           _vm._v(
             "\n                        Crear un nueva Unidad de Medida\n                    "
+          ),
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close",
+          },
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      ),
+    ])
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ventas/tipoProducto/TipoProductoIndexComponent.vue?vue&type=template&id=ccce9fc6&":
+/*!**********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ventas/tipoProducto/TipoProductoIndexComponent.vue?vue&type=template&id=ccce9fc6& ***!
+  \**********************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("div", { staticClass: "row mt-3" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c("div", { staticClass: "ibox" }, [
+          _c("div", { staticClass: "ibox-content" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-12" }, [
+                _c("div", { staticClass: "float-right mb-2" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary btn-agregar",
+                      attrs: { type: "button" },
+                      on: { click: _vm.openModalStore },
+                    },
+                    [
+                      _c("i", {
+                        staticClass: "fa fa-plus",
+                        attrs: { "aria-hidden": "true" },
+                      }),
+                      _vm._v(
+                        "\n                                    Agregar Tipo de Producto\n                                "
+                      ),
+                    ]
+                  ),
+                ]),
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col-md-12" },
+                [
+                  _c("datatable-tipo-producto-component", {
+                    ref: "datatableTipoProducto",
+                  }),
+                ],
+                1
+              ),
+            ]),
+          ]),
+        ]),
+      ]),
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "modalCreate",
+          tabindex: "-1",
+          "aria-labelledby": "exampleModalLabel",
+          "aria-hidden": "true",
+        },
+      },
+      [
+        _c("div", { staticClass: "modal-dialog" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _vm._m(1),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-body" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "" } }, [_vm._v("Tipo")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.tipo,
+                      expression: "tipo",
+                    },
+                  ],
+                  staticClass: "form-control form-control-sm",
+                  class: _vm.errores.tipo.error ? "is-invalid" : "",
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.tipo },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.tipo = $event.target.value
+                    },
+                  },
+                }),
+                _vm._v(" "),
+                _vm.errores.tipo.error
+                  ? _c(
+                      "span",
+                      {
+                        staticClass: "invalid-feedback",
+                        attrs: { role: "alert" },
+                      },
+                      [_c("strong", [_vm._v(_vm._s(_vm.errores.tipo.mensaje))])]
+                    )
+                  : _vm._e(),
+              ]),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-footer" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-secondary",
+                  attrs: { type: "button", "data-dismiss": "modal" },
+                },
+                [
+                  _vm._v(
+                    "\n                        Cerrar\n                    "
+                  ),
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  attrs: { type: "button" },
+                  on: { click: _vm.storeTipoProducto },
+                },
+                [
+                  _vm._v(
+                    "\n                        Guardar\n                    "
+                  ),
+                ]
+              ),
+            ]),
+          ]),
+        ]),
+      ]
+    ),
+  ])
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "row wrapper border-bottom white-bg page-heading" },
+      [
+        _c("div", { staticClass: "col-lg-10 col-md-10" }, [
+          _c("h2", { staticStyle: { "text-transform": "uppercase" } }, [
+            _c("b", [_vm._v("Tipos de Producto")]),
+          ]),
+          _vm._v(" "),
+          _c("ol", { staticClass: "breadcrumb" }, [
+            _c("li", { staticClass: "breadcrumb-item active" }, [
+              _c("a", [_vm._v("Tipos de Producto")]),
+            ]),
+            _vm._v(" "),
+            _c("li", { staticClass: "breadcrumb-item active" }, [
+              _c("strong", [_vm._v("Inicio")]),
+            ]),
+          ]),
+        ]),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
+        [
+          _vm._v(
+            "\n                        Crear un nuevo Tipo de Producto\n                    "
           ),
         ]
       ),
