@@ -10,6 +10,7 @@ use App\Http\Controllers\Mantenimiento\AlmacenController;
 use App\Http\Controllers\Mantenimiento\EmpresaPersonalController;
 use App\Http\Controllers\Mantenimiento\UnidadMedidaController;
 use App\Http\Controllers\Ubigeo\UbigeoController;
+use App\Http\Controllers\Ventas\ProductoController;
 use App\Http\Controllers\Ventas\TipoProductoController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -102,6 +103,13 @@ Route::prefix('tipoProducto')->middleware('auth')->group(function(){
     Route::post('/update/{id}',[tipoProductoController::class, 'update'])->name('tipoProducto.update');
     Route::post('/destroy/{id}',[tipoProductoController::class, 'destroy'])->name('tipoProducto.destroy');
     Route::get('/getList',[tipoProductoController::class,'getList'])->name('tipoProducto.getList');
+});
+Route::prefix('producto')->middleware('auth')->group(function (){
+    Route::get('/', [ProductoController::class, 'index'])->name('producto.index');
+    Route::post('/store',[ProductoController::class, 'store'])->name('producto.store');
+    Route::post('/update/{id}',[ProductoController::class, 'update'])->name('producto.update');
+    Route::post('/destroy/{id}',[ProductoController::class, 'destroy'])->name('producto.destroy');
+    Route::get('/getList',[ProductoController::class,'getList'])->name('producto.getList');
 });
 Route::prefix('ubigeo')->middleware('auth')->group(function(){
     Route::get('getprovincias/{departamentoid}',[UbigeoController::class,'getProvincias'])->name('ubigeo.getProvincias');

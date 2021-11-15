@@ -3,27 +3,35 @@
 namespace App\Http\Controllers\Ventas;
 
 use App\Http\Controllers\Controller;
-use App\Models\Ventas\TipoProducto;
+use App\Models\Ventas\Producto;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Facades\DataTables;
 
-class TipoProductoController extends Controller
+class ProductoController extends Controller
 {
     public function index()
     {
-        return view('ventas.tipoProducto.index');
+        return view('ventas.producto.index');
     }
     public function getList()
     {
-        return DataTables::of(TipoProducto::where('estado', 'ACTIVO')->get())->toJson();
+        return Producto::where('estado', 'ACTIVO')->with(['tipoProducto'])->get();
     }
     public function store(Request $request)
     {
         DB::beginTransaction();
         try {
-            TipoProducto::create($request->all());
+            Log::info($request);
+            $datos = $request->except(['imagen']);
+            if ($request->hasFile('imagen')) {
+                $datos['url_imagen'] = $request->file('imagen')->store('public/Producto');
+                $datos['nombre_imagen'] = $request->file('imagen')->getClientOriginalName();
+            }
+            Log::info($datos);
+            Producto::create($datos);
             DB::commit();
             return array("success" => true, "mensaje" => "Registro con Exito");
         } catch (Exception $e) {
@@ -35,8 +43,13 @@ class TipoProductoController extends Controller
     {
         DB::beginTransaction();
         try {
-            TipoProducto::findOrFail($id)->update(
-                $request->all()
+            $datos = $request->except(['imagen']);
+            if ($request->hasFile('imagen')) {
+                $datos['url_imagen'] = $request->file('imagen')->store('public/Producto');
+                $datos['nombre_imagen'] = $request->file('imagen')->getClientOriginalName();
+            }
+            Producto::findOrFail($id)->update(
+                $datos
             );
             DB::commit();
             return array("success" => true, "mensaje" => "Actualizado con Exito");
@@ -49,7 +62,7 @@ class TipoProductoController extends Controller
     {
         DB::beginTransaction();
         try {
-            TipoProducto::findOrFail($id)->update([
+            Producto::findOrFail($id)->update([
                 "estado" => "ANULADO"
             ]);
             DB::commit();
@@ -59,5 +72,4 @@ class TipoProductoController extends Controller
             return array("success" => false, "mensaje" => $e->getMessage());
         }
     }
-
 }

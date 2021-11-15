@@ -5,6 +5,9 @@
  */
 import Vue from "vue";
 import helperJs from "./helpers.js";
+import vSelect from "vue-select";
+// import LottieAnimation from "lottie-vuejs/src/LottieAnimation.vue"
+Vue.component("v-select", vSelect);
 require("./bootstrap");
 
 window.Vue = require("vue").default;
@@ -15,6 +18,7 @@ const plugin = {
     },
 };
 Vue.use(plugin);
+// Vue.use(LottieAnimation);
 // const $ = require("jquery");
 // window.$ = $;
 
@@ -61,8 +65,7 @@ Vue.component(
 );
 Vue.component(
     "api-index-component",
-    require("./components/administracion/Api/ApiIndexComponent.vue")
-        .default
+    require("./components/administracion/Api/ApiIndexComponent.vue").default
 );
 Vue.component(
     "cliente-index-component",
@@ -78,6 +81,10 @@ Vue.component(
     "almacenindex-component",
     require("./components/mantenimiento/Almacen/AlmacenIndexComponent.vue")
         .default
+);
+Vue.component(
+    "productoindex-component",
+    require("./components/ventas/Producto/ProductoIndexComponent.vue").default
 );
 //Datatable
 
@@ -99,23 +106,29 @@ Vue.component(
 Vue.component(
     "datatableapi-component",
     require("./components/datatables/Api/DatatableApiComponent.vue")
-)
+);
 Vue.component(
     "datatablecliente-component",
     require("./components/datatables/Cliente/DatatableClienteComponent.vue")
-)
+);
 Vue.component(
     "datatableproveedor-component",
     require("./components/datatables/Proveedor/DatatableProveedorComponent.vue")
-)
+);
 Vue.component(
     "datatableunidadmedida-component",
     require("./components/datatables/UnidadMedida/DatatableUnidadMedidaComponent.vue")
-)
+);
 Vue.component(
     "datatablealmacen-component",
     require("./components/datatables/Almacen/DatatableAlmacenComponent.vue")
-)
+);
+//List
+Vue.component(
+    "producto-lista-component",
+    require("./components/ventas/Producto/ProductoListaComponent.vue")
+);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

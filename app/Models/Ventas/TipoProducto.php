@@ -14,4 +14,8 @@ class TipoProducto extends Model
         'estado'
     ];
     public $timestamps=true;
+    public function productos()
+    {
+        return $this->hasMany(Producto::class,'tipo_producto_id');
+    }
 }

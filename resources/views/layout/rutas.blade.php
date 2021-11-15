@@ -66,7 +66,7 @@
                     de Productos</a></li>
         </ul>
         <ul class="nav nav-second-level collapse">
-            <li class="@yield('producto-active')"><a href="#"><i class="fa fa-cart-plus"
+            <li class="@yield('producto-active')"><a href="{{route('producto.index')}}"><i class="fa fa-cart-plus"
                         aria-hidden="true"></i>Productos</a></li>
         </ul>
         <ul class="nav nav-second-level collapse">
